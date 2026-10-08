@@ -1,6 +1,10 @@
 # Imported from stock TB520FU ZUI_17.5.10.362 vendor/build.prop
 # should change this by project
 vendor.display.lcd_density=340
+
+# The high brightness mode of the panel as the top of the backlight scale
+# (LenovoHbmBridge in DisplayManager, display configuration of the device)
+ro.vendor.display.hbm_bridge=true
 #ro.sys.zui.param.c=0
 persist.sys.colormode_api=google
 persist.sys.colormode_modes=257:native;0:standard
