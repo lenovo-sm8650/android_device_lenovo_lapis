@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <!-- The handwriting IME declares itself default (android:isDefault), so on
+         a new install the system picked it over Gboard as the keyboard, and
+         no on-screen keyboard came up. PenService turns its IME on and off by
+         itself for pen writing. -->
+    <bool name="im_is_default">false</bool>
+</resources>
