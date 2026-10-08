@@ -9,4 +9,7 @@
 
     <!-- Adaptive brightness on from first boot -->
     <bool name="def_screen_brightness_automatic_mode">true</bool>
+    <!-- WiFi Display (Miracast) on in Cast ("Enable wireless display"): the list
+         then offers Miracast receivers as well as the Cast devices. -->
+    <bool name="def_wifi_display_on">true</bool>
 </resources>
