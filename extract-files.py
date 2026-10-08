@@ -140,11 +140,14 @@ blob_fixups: blob_fixups_user_type = {
     # WiFi Display (OnePlus QSSI of Android 16, see proprietary-files.txt)
     'system_ext/lib64/libwfdcommonutils.so': blob_fixup()
         .remove_needed('libheif.so'),
+    # AudioSystem moved from libaudioclient to libaudiobase in Android 17.
     'system_ext/lib64/libwfdmmsrc_system.so': blob_fixup()
+        .add_needed('libaudiobase.so')
         .add_needed('libgui_shim.so'),
     'system_ext/lib64/libwfdnative.so': blob_fixup()
         .add_needed('libinput_shim.so'),
     'system_ext/lib64/libwfdservice.so': blob_fixup()
+        .add_needed('libaudiobase.so')
         .replace_needed('android.media.audio.common.types-V4-cpp.so', 'android.media.audio.common.types-V5-cpp.so'),
     (
         'vendor/bin/hw/vendor.dolby.media.c2@1.0-service-vision',
