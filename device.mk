@@ -32,6 +32,21 @@ $(call inherit-product, frameworks/native/build/tablet-10in-xhdpi-2048-dalvik-he
 PRODUCT_PACKAGES += \
     TB520FUParts
 
+# WiFi Display (Miracast): the QTI session of the OnePlus QSSI blobs
+# (proprietary-files.txt) with the shims of hardware/lineage/compat and the
+# QTI display config clients built from source
+PRODUCT_PACKAGES += \
+    android.hidl.base@1.0 \
+    libdisplayconfig.system.qti \
+    libgui_shim \
+    libinput_shim \
+    vendor.display.config@2.0 \
+    vendor.qti.hardware.display.config-V5-ndk
+
+PRODUCT_SYSTEM_EXT_PROPERTIES += \
+    persist.debug.wfd.enable=1 \
+    persist.sys.wfd.virtual=0
+
 # Dolby Vision service app with the stock com.dolby.vision_play broadcast
 # (lenovo/DolbyVisionService)
 PRODUCT_PACKAGES += \

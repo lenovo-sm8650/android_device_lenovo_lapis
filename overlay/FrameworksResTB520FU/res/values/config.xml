@@ -320,4 +320,6 @@
         <item>com.painting.draw</item>
         <item>com.google.android.apps.docs</item>
     </string-array>
+    <!-- WiFi Display (Miracast) through the QTI session (WfdCommon) -->
+    <bool name="config_enableWifiDisplay">true</bool>
 </resources>
