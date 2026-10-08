@@ -10,7 +10,12 @@ import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.Paint;
+import android.graphics.PixelFormat;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -38,6 +43,7 @@ final class PixelToolbar implements Runnable, View.OnLayoutChangeListener {
 
     final Toolbar mToolbar;
     Drawable mArrow;
+    Drawable mClose;
     Drawable mBackground;
 
     PixelToolbar(Toolbar toolbar) {
@@ -70,7 +76,23 @@ final class PixelToolbar implements Runnable, View.OnLayoutChangeListener {
         ImageButton back = backButton();
         if (back != null && mBackground != null && back.getBackground() != mBackground) {
             v.post(this);
+        } else if (mArrow != null && mToolbar.getNavigationIcon() != wantedIcon()) {
+            // the page switched its navigation icon (back arrow, "X" while editing)
+            v.post(this);
         }
+    }
+
+    /** The edit mode of the pen pages replaces the back arrow with an "X". */
+    boolean isEditing() {
+        Context context = mToolbar.getContext();
+        int id = context.getResources().getIdentifier("language_edit_group", "id",
+                context.getPackageName());
+        View group = id == 0 ? null : mToolbar.getRootView().findViewById(id);
+        return group != null && group.getVisibility() == View.VISIBLE;
+    }
+
+    Drawable wantedIcon() {
+        return isEditing() && mClose != null ? mClose : mArrow;
     }
 
     void apply() {
@@ -93,6 +115,13 @@ final class PixelToolbar implements Runnable, View.OnLayoutChangeListener {
             mArrow.setAutoMirrored(true);
             mToolbar.setNavigationIcon(mArrow);
             mBackground = circle(context, night);
+            mClose = new CloseDrawable(Math.round(24 * density), Math.round(2 * density),
+                    context.getColor(night
+                            ? android.R.color.system_on_surface_variant_dark
+                            : android.R.color.system_on_surface_variant_light));
+        }
+        if (mToolbar.getNavigationIcon() != wantedIcon()) {
+            mToolbar.setNavigationIcon(wantedIcon());
         }
 
         ImageButton back = backButton();
@@ -142,6 +171,60 @@ final class PixelToolbar implements Runnable, View.OnLayoutChangeListener {
             }
         }
         return null;
+    }
+
+    /**
+     * The "X" of the back button while editing: 24dp like the back arrow and
+     * centered in the button. The stock one (selector_ic_close) is inset by the
+     * ZUI action bar padding, which moves it out of the 40dp circle.
+     */
+    static final class CloseDrawable extends Drawable {
+        private final int mSize;
+        private final Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+        CloseDrawable(int size, int strokeWidth, int color) {
+            mSize = size;
+            mPaint.setColor(color);
+            mPaint.setStyle(Paint.Style.STROKE);
+            mPaint.setStrokeWidth(strokeWidth);
+            mPaint.setStrokeCap(Paint.Cap.ROUND);
+        }
+
+        @Override
+        public void draw(Canvas canvas) {
+            Rect b = getBounds();
+            // 12dp of the 24dp box, like ic_close of Material
+            float inset = b.width() * 6f / 24f;
+            canvas.drawLine(b.left + inset, b.top + inset, b.right - inset, b.bottom - inset,
+                    mPaint);
+            canvas.drawLine(b.left + inset, b.bottom - inset, b.right - inset, b.top + inset,
+                    mPaint);
+        }
+
+        @Override
+        public int getIntrinsicWidth() {
+            return mSize;
+        }
+
+        @Override
+        public int getIntrinsicHeight() {
+            return mSize;
+        }
+
+        @Override
+        public void setAlpha(int alpha) {
+            mPaint.setAlpha(alpha);
+        }
+
+        @Override
+        public void setColorFilter(ColorFilter colorFilter) {
+            mPaint.setColorFilter(colorFilter);
+        }
+
+        @Override
+        public int getOpacity() {
+            return PixelFormat.TRANSLUCENT;
+        }
     }
 
     /** SettingsLib expressive back button: a filled circle with a ripple. */

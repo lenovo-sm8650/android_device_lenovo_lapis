@@ -58,4 +58,20 @@
     <color name="button_background_zui">@android:color/system_surface_container_high_light</color>
     <color name="dialog_button_background_normal_zui">@android:color/system_surface_container_high_light</color>
     <color name="dialog_button_background_normal_zui_dark">@android:color/system_surface_container_high_dark</color>
+
+    <!-- Recognition languages page: the lists are cards of the Settings
+         surface, with the Settings text color; the download button is the
+         tonal pill of the other Settings rows (progress fills it with the
+         primary container). The stock page used white cards, a green
+         progress and a grey outline. -->
+    <color name="panel_bg_color">@android:color/system_surface_light</color>
+    <color name="language_downloaded_text_color">@android:color/system_on_surface_light</color>
+    <color name="language_not_downloaded_text_color">@android:color/system_on_surface_light</color>
+    <color name="language_progress_view_background">@android:color/system_surface_container_highest_light</color>
+    <color name="language_progress_paint_background">@color/panel_bg_color</color>
+    <color name="language_progress_stroke">@android:color/transparent</color>
+    <color name="language_progress_solid">@android:color/system_primary_container_light</color>
+    <color name="language_progress_text">@android:color/system_on_surface_variant_light</color>
+    <!-- Selected radio and checkbox -->
+    <color name="system_choose_icon_color_zui">@android:color/system_primary_light</color>
 </resources>

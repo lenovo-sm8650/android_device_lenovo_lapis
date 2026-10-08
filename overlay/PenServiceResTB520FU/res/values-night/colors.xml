@@ -28,4 +28,15 @@
     <color name="dialog_list_item_text_color">@android:color/system_on_surface_dark</color>
     <color name="button_background_zui">@android:color/system_surface_container_high_dark</color>
     <color name="dialog_button_background_normal_zui">@android:color/system_surface_container_high_dark</color>
+
+    <!-- Recognition languages page, see values/colors.xml -->
+    <color name="panel_bg_color">@android:color/system_surface_container_dark</color>
+    <color name="language_downloaded_text_color">@android:color/system_on_surface_dark</color>
+    <color name="language_not_downloaded_text_color">@android:color/system_on_surface_dark</color>
+    <color name="language_progress_view_background">@android:color/system_surface_container_highest_dark</color>
+    <color name="language_progress_paint_background">@color/panel_bg_color</color>
+    <color name="language_progress_stroke">@android:color/transparent</color>
+    <color name="language_progress_solid">@android:color/system_primary_container_dark</color>
+    <color name="language_progress_text">@android:color/system_on_surface_variant_dark</color>
+    <color name="system_choose_icon_color_zui">@android:color/system_primary_dark</color>
 </resources>

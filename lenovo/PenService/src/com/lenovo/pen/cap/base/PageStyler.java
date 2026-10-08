@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * Gives every Settings style page of PenService (an activity with the ZUI
@@ -43,6 +44,7 @@ final class PageStyler implements Application.ActivityLifecycleCallbacks {
                 }
                 PixelToolbar.attach(toolbar);
                 EdgeToEdge.apply(activity);
+                EditModeTransition.install(activity);
             }
         });
     }
