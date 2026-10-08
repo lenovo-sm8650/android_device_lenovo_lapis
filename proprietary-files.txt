@@ -1083,9 +1083,9 @@ vendor/lib64/vendor.lenovo.hardware.display-V3-ndk.so
 vendor/lib64/vendor.lenovo.hardware.keyboard-V2-ndk_platform.so
 vendor/lib64/vendor.lenovo.hardware.touchscreen-V2-ndk.so
 
-# WiFi Display (Miracast) - system: the QSSI ones of the OnePlus sm8650-common
-# (OxygenOS 16, TheMuppets lineage-24.0, as LineageOS ships them). The stock
-# ZUI 17.5 ones are built for Android 14 and need more than shims on Android 17.
+# WiFi Display (Miracast) - system: stock, the pair of the stock vendor side
+# (the OnePlus QSSI ones of Android 16 capture the screen in a pixel format the
+# stock vendor capture rejects, and want IAllocator V2; the vendor has V1).
 system/framework/WfdCommon.jar;BOOT_JAR
 system_ext/bin/wfdservice64
 system_ext/etc/init/wfdservice.rc
