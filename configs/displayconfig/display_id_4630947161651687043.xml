@@ -1,127 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Display configuration of the built-in panel of the Lenovo Yoga Tab Plus.
 
-     The backlight scale (0 to 1) is the one of Android, with the high brightness
-     mode of the panel on top: up to 0.85 the normal range of the panel (the
-     brightness curve of the previous configuration, 650 nits at the end), above
-     it the range with the "hbm" node of the panel on, up to 900 nits (the typical
-     and the peak brightness of the specifications of the panel). LenovoHbmBridge
-     sends it as the "hbm" node and a backlight value of the composer.
-
-     The HDR brightness has the shape of the Pixel configuration (cheetah): the HDR
-     peak is the maximum of the normal range for most of the screen brightnesses, and
-     the high brightness mode is only used when the screen brightness is high. -->
+     Like the stock firmware and other LCD tablets (Pixel Tablet), there is no HDR
+     brightness boost: the backlight lights the whole panel, so raising it for HDR
+     highlights would also raise the black of the video, and HDR content is tone
+     mapped within the SDR brightness. The high brightness mode of the panel is for
+     sunlight only, outside of this scale, as on the stock firmware (hardware/lenovo
+     input, SunlightHbmController). -->
 <displayConfiguration>
     <name>Lenovo TB520FU LCD</name>
 
+    <!-- The brightness curve of config.xml: 650 nits, the typical brightness of the
+         specifications of the panel, at the top. -->
     <screenBrightnessMap>
-        <point><value>0.000830</value><nits>7.91434</nits></point>
-        <point><value>0.010039</value><nits>8.0</nits></point>
-        <point><value>0.036811</value><nits>30.0</nits></point>
-        <point><value>0.087008</value><nits>70.0</nits></point>
-        <point><value>0.127165</value><nits>100.0</nits></point>
-        <point><value>0.153937</value><nits>120.0</nits></point>
-        <point><value>0.194094</value><nits>150.0</nits></point>
-        <point><value>0.234252</value><nits>180.0</nits></point>
-        <point><value>0.271063</value><nits>210.0</nits></point>
-        <point><value>0.351378</value><nits>270.0</nits></point>
-        <point><value>0.441732</value><nits>340.0</nits></point>
-        <point><value>0.548819</value><nits>420.0</nits></point>
-        <point><value>0.625787</value><nits>480.0</nits></point>
-        <point><value>0.719488</value><nits>550.0</nits></point>
-        <point><value>0.850000</value><nits>650.0</nits></point>
-        <point><value>1.000000</value><nits>900.0</nits></point>
+        <point><value>0.000977</value><nits>7.91434</nits></point>
+        <point><value>0.011811024</value><nits>8.0</nits></point>
+        <point><value>0.04330709</value><nits>30.0</nits></point>
+        <point><value>0.10236221</value><nits>70.0</nits></point>
+        <point><value>0.1496063</value><nits>100.0</nits></point>
+        <point><value>0.18110237</value><nits>120.0</nits></point>
+        <point><value>0.22834645</value><nits>150.0</nits></point>
+        <point><value>0.27559054</value><nits>180.0</nits></point>
+        <point><value>0.31889763</value><nits>210.0</nits></point>
+        <point><value>0.41338584</value><nits>270.0</nits></point>
+        <point><value>0.51968503</value><nits>340.0</nits></point>
+        <point><value>0.6456693</value><nits>420.0</nits></point>
+        <point><value>0.7362205</value><nits>480.0</nits></point>
+        <point><value>0.8464567</value><nits>550.0</nits></point>
+        <point><value>1.0</value><nits>650.0</nits></point>
     </screenBrightnessMap>
     <screenBrightnessDefault>0.2862</screenBrightnessDefault>
 
-    <highBrightnessMode enabled="true">
-        <transitionPoint>0.85</transitionPoint>
-        <!-- Sunlight: like the stock firmware and the Pixel (auto brightness, above
-             5000 lux), for the usual time of Android (5 minutes in 30). HDR video does
-             not use this time, only the thermal limits of the device. -->
-        <minimumLux>5000</minimumLux>
-        <timing>
-            <timeWindowSecs>1800</timeWindowSecs>
-            <timeMaxSecs>300</timeMaxSecs>
-            <timeMinSecs>60</timeMinSecs>
-        </timing>
-        <allowInLowPowerMode>false</allowInLowPowerMode>
-        <minimumHdrPercentOfScreen>0.1</minimumHdrPercentOfScreen>
-        <sdrHdrRatioMap>
-            <point><sdrNits>2.000</sdrNits><hdrRatio>8.000</hdrRatio></point>
-            <point><sdrNits>81.250</sdrNits><hdrRatio>8.000</hdrRatio></point>
-            <point><sdrNits>89.250</sdrNits><hdrRatio>7.283</hdrRatio></point>
-            <point><sdrNits>97.250</sdrNits><hdrRatio>6.684</hdrRatio></point>
-            <point><sdrNits>105.250</sdrNits><hdrRatio>6.176</hdrRatio></point>
-            <point><sdrNits>113.250</sdrNits><hdrRatio>5.740</hdrRatio></point>
-            <point><sdrNits>121.250</sdrNits><hdrRatio>5.361</hdrRatio></point>
-            <point><sdrNits>129.250</sdrNits><hdrRatio>5.029</hdrRatio></point>
-            <point><sdrNits>137.250</sdrNits><hdrRatio>4.736</hdrRatio></point>
-            <point><sdrNits>145.250</sdrNits><hdrRatio>4.475</hdrRatio></point>
-            <point><sdrNits>153.250</sdrNits><hdrRatio>4.241</hdrRatio></point>
-            <point><sdrNits>161.250</sdrNits><hdrRatio>4.031</hdrRatio></point>
-            <point><sdrNits>169.250</sdrNits><hdrRatio>3.840</hdrRatio></point>
-            <point><sdrNits>177.250</sdrNits><hdrRatio>3.667</hdrRatio></point>
-            <point><sdrNits>185.250</sdrNits><hdrRatio>3.509</hdrRatio></point>
-            <point><sdrNits>193.250</sdrNits><hdrRatio>3.364</hdrRatio></point>
-            <point><sdrNits>201.250</sdrNits><hdrRatio>3.230</hdrRatio></point>
-            <point><sdrNits>209.250</sdrNits><hdrRatio>3.106</hdrRatio></point>
-            <point><sdrNits>217.250</sdrNits><hdrRatio>2.992</hdrRatio></point>
-            <point><sdrNits>225.250</sdrNits><hdrRatio>2.886</hdrRatio></point>
-            <point><sdrNits>233.250</sdrNits><hdrRatio>2.787</hdrRatio></point>
-            <point><sdrNits>241.250</sdrNits><hdrRatio>2.694</hdrRatio></point>
-            <point><sdrNits>249.250</sdrNits><hdrRatio>2.608</hdrRatio></point>
-            <point><sdrNits>257.250</sdrNits><hdrRatio>2.527</hdrRatio></point>
-            <point><sdrNits>265.250</sdrNits><hdrRatio>2.451</hdrRatio></point>
-            <point><sdrNits>273.250</sdrNits><hdrRatio>2.379</hdrRatio></point>
-            <point><sdrNits>281.250</sdrNits><hdrRatio>2.311</hdrRatio></point>
-            <point><sdrNits>289.250</sdrNits><hdrRatio>2.247</hdrRatio></point>
-            <point><sdrNits>297.250</sdrNits><hdrRatio>2.187</hdrRatio></point>
-            <point><sdrNits>305.250</sdrNits><hdrRatio>2.129</hdrRatio></point>
-            <point><sdrNits>313.250</sdrNits><hdrRatio>2.075</hdrRatio></point>
-            <point><sdrNits>321.250</sdrNits><hdrRatio>2.023</hdrRatio></point>
-            <point><sdrNits>329.250</sdrNits><hdrRatio>1.974</hdrRatio></point>
-            <point><sdrNits>337.250</sdrNits><hdrRatio>1.927</hdrRatio></point>
-            <point><sdrNits>345.250</sdrNits><hdrRatio>1.883</hdrRatio></point>
-            <point><sdrNits>353.250</sdrNits><hdrRatio>1.840</hdrRatio></point>
-            <point><sdrNits>361.250</sdrNits><hdrRatio>1.799</hdrRatio></point>
-            <point><sdrNits>369.250</sdrNits><hdrRatio>1.760</hdrRatio></point>
-            <point><sdrNits>377.250</sdrNits><hdrRatio>1.723</hdrRatio></point>
-            <point><sdrNits>385.250</sdrNits><hdrRatio>1.687</hdrRatio></point>
-            <point><sdrNits>393.250</sdrNits><hdrRatio>1.653</hdrRatio></point>
-            <point><sdrNits>401.250</sdrNits><hdrRatio>1.620</hdrRatio></point>
-            <point><sdrNits>409.250</sdrNits><hdrRatio>1.588</hdrRatio></point>
-            <point><sdrNits>417.250</sdrNits><hdrRatio>1.558</hdrRatio></point>
-            <point><sdrNits>425.250</sdrNits><hdrRatio>1.529</hdrRatio></point>
-            <point><sdrNits>433.250</sdrNits><hdrRatio>1.500</hdrRatio></point>
-            <point><sdrNits>441.250</sdrNits><hdrRatio>1.473</hdrRatio></point>
-            <point><sdrNits>449.250</sdrNits><hdrRatio>1.447</hdrRatio></point>
-            <point><sdrNits>457.250</sdrNits><hdrRatio>1.422</hdrRatio></point>
-            <point><sdrNits>465.250</sdrNits><hdrRatio>1.397</hdrRatio></point>
-            <point><sdrNits>473.250</sdrNits><hdrRatio>1.373</hdrRatio></point>
-            <point><sdrNits>481.250</sdrNits><hdrRatio>1.351</hdrRatio></point>
-            <point><sdrNits>489.250</sdrNits><hdrRatio>1.329</hdrRatio></point>
-            <point><sdrNits>490.750</sdrNits><hdrRatio>1.325</hdrRatio></point>
-            <point><sdrNits>498.750</sdrNits><hdrRatio>1.328</hdrRatio></point>
-            <point><sdrNits>506.750</sdrNits><hdrRatio>1.332</hdrRatio></point>
-            <point><sdrNits>514.750</sdrNits><hdrRatio>1.336</hdrRatio></point>
-            <point><sdrNits>522.750</sdrNits><hdrRatio>1.340</hdrRatio></point>
-            <point><sdrNits>530.750</sdrNits><hdrRatio>1.343</hdrRatio></point>
-            <point><sdrNits>538.750</sdrNits><hdrRatio>1.346</hdrRatio></point>
-            <point><sdrNits>546.750</sdrNits><hdrRatio>1.350</hdrRatio></point>
-            <point><sdrNits>554.750</sdrNits><hdrRatio>1.353</hdrRatio></point>
-            <point><sdrNits>562.750</sdrNits><hdrRatio>1.356</hdrRatio></point>
-            <point><sdrNits>570.750</sdrNits><hdrRatio>1.359</hdrRatio></point>
-            <point><sdrNits>578.750</sdrNits><hdrRatio>1.362</hdrRatio></point>
-            <point><sdrNits>586.750</sdrNits><hdrRatio>1.365</hdrRatio></point>
-            <point><sdrNits>594.750</sdrNits><hdrRatio>1.367</hdrRatio></point>
-            <point><sdrNits>602.750</sdrNits><hdrRatio>1.370</hdrRatio></point>
-            <point><sdrNits>610.750</sdrNits><hdrRatio>1.373</hdrRatio></point>
-            <point><sdrNits>618.750</sdrNits><hdrRatio>1.375</hdrRatio></point>
-            <point><sdrNits>626.750</sdrNits><hdrRatio>1.378</hdrRatio></point>
-            <point><sdrNits>634.750</sdrNits><hdrRatio>1.380</hdrRatio></point>
-            <point><sdrNits>642.750</sdrNits><hdrRatio>1.383</hdrRatio></point>
-            <point><sdrNits>650.000</sdrNits><hdrRatio>1.385</hdrRatio></point>
-        </sdrHdrRatioMap>
-    </highBrightnessMode>
+    <!-- Thermal throttling: the levels of the Pixel configurations (Pixel Tablet,
+         Pixel 7 Pro: 465, 297, 213 and 150 nits). The skin thresholds of the thermal
+         HAL start at 48 C (light), so normal use is not throttled; the stock firmware
+         had no limit of its own (config_zui_enter/exitHbmTemperature 0). -->
+    <thermalThrottling>
+        <brightnessThrottlingMap>
+            <brightnessThrottlingPoint>
+                <thermalStatus>light</thermalStatus>
+                <!-- 465 nits -->
+                <brightness>0.713583</brightness>
+            </brightnessThrottlingPoint>
+            <brightnessThrottlingPoint>
+                <thermalStatus>moderate</thermalStatus>
+                <!-- 297 nits -->
+                <brightness>0.454387</brightness>
+            </brightnessThrottlingPoint>
+            <brightnessThrottlingPoint>
+                <thermalStatus>severe</thermalStatus>
+                <!-- 213 nits -->
+                <brightness>0.323622</brightness>
+            </brightnessThrottlingPoint>
+            <brightnessThrottlingPoint>
+                <thermalStatus>critical</thermalStatus>
+                <!-- 150 nits -->
+                <brightness>0.228346</brightness>
+            </brightnessThrottlingPoint>
+        </brightnessThrottlingMap>
+    </thermalThrottling>
 </displayConfiguration>
