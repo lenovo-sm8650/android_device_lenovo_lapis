@@ -4,9 +4,13 @@
      The backlight scale (0 to 1) is the one of Android, with the high brightness
      mode of the panel on top: up to 0.85 the normal range of the panel (the
      brightness curve of the previous configuration, 650 nits at the end), above
-     it the range with the "hbm" node of the panel on, up to 900 nits (typical and
-     peak brightness of the specifications of the panel). LenovoHbmBridge sends it
-     as the "hbm" node and a backlight value of the composer. -->
+     it the range with the "hbm" node of the panel on, up to 900 nits (the typical
+     and the peak brightness of the specifications of the panel). LenovoHbmBridge
+     sends it as the "hbm" node and a backlight value of the composer.
+
+     The HDR brightness has the shape of the Pixel configuration (cheetah): the HDR
+     peak is the maximum of the normal range for most of the screen brightnesses, and
+     the high brightness mode is only used when the screen brightness is high. -->
 <displayConfiguration>
     <name>Lenovo TB520FU LCD</name>
 
@@ -30,11 +34,11 @@
     </screenBrightnessMap>
     <screenBrightnessDefault>0.2862</screenBrightnessDefault>
 
-    <!-- Sunlight: like the stock firmware (5000 lux, brightness at the maximum), for
-         the usual time of Android. HDR video does not use this time, only the thermal
-         limits of the device. -->
     <highBrightnessMode enabled="true">
         <transitionPoint>0.85</transitionPoint>
+        <!-- Sunlight: like the stock firmware and the Pixel (auto brightness, above
+             5000 lux), for the usual time of Android (5 minutes in 30). HDR video does
+             not use this time, only the thermal limits of the device. -->
         <minimumLux>5000</minimumLux>
         <timing>
             <timeWindowSecs>1800</timeWindowSecs>
@@ -42,34 +46,82 @@
             <timeMinSecs>60</timeMinSecs>
         </timing>
         <allowInLowPowerMode>false</allowInLowPowerMode>
-        <minimumHdrPercentOfScreen>0.25</minimumHdrPercentOfScreen>
+        <minimumHdrPercentOfScreen>0.1</minimumHdrPercentOfScreen>
         <sdrHdrRatioMap>
-            <point><sdrNits>2.0</sdrNits><hdrRatio>8.0</hdrRatio></point>
-            <point><sdrNits>300.0</sdrNits><hdrRatio>3.0</hdrRatio></point>
-            <point><sdrNits>650.0</sdrNits><hdrRatio>1.38</hdrRatio></point>
+            <point><sdrNits>2.000</sdrNits><hdrRatio>8.000</hdrRatio></point>
+            <point><sdrNits>81.250</sdrNits><hdrRatio>8.000</hdrRatio></point>
+            <point><sdrNits>89.250</sdrNits><hdrRatio>7.283</hdrRatio></point>
+            <point><sdrNits>97.250</sdrNits><hdrRatio>6.684</hdrRatio></point>
+            <point><sdrNits>105.250</sdrNits><hdrRatio>6.176</hdrRatio></point>
+            <point><sdrNits>113.250</sdrNits><hdrRatio>5.740</hdrRatio></point>
+            <point><sdrNits>121.250</sdrNits><hdrRatio>5.361</hdrRatio></point>
+            <point><sdrNits>129.250</sdrNits><hdrRatio>5.029</hdrRatio></point>
+            <point><sdrNits>137.250</sdrNits><hdrRatio>4.736</hdrRatio></point>
+            <point><sdrNits>145.250</sdrNits><hdrRatio>4.475</hdrRatio></point>
+            <point><sdrNits>153.250</sdrNits><hdrRatio>4.241</hdrRatio></point>
+            <point><sdrNits>161.250</sdrNits><hdrRatio>4.031</hdrRatio></point>
+            <point><sdrNits>169.250</sdrNits><hdrRatio>3.840</hdrRatio></point>
+            <point><sdrNits>177.250</sdrNits><hdrRatio>3.667</hdrRatio></point>
+            <point><sdrNits>185.250</sdrNits><hdrRatio>3.509</hdrRatio></point>
+            <point><sdrNits>193.250</sdrNits><hdrRatio>3.364</hdrRatio></point>
+            <point><sdrNits>201.250</sdrNits><hdrRatio>3.230</hdrRatio></point>
+            <point><sdrNits>209.250</sdrNits><hdrRatio>3.106</hdrRatio></point>
+            <point><sdrNits>217.250</sdrNits><hdrRatio>2.992</hdrRatio></point>
+            <point><sdrNits>225.250</sdrNits><hdrRatio>2.886</hdrRatio></point>
+            <point><sdrNits>233.250</sdrNits><hdrRatio>2.787</hdrRatio></point>
+            <point><sdrNits>241.250</sdrNits><hdrRatio>2.694</hdrRatio></point>
+            <point><sdrNits>249.250</sdrNits><hdrRatio>2.608</hdrRatio></point>
+            <point><sdrNits>257.250</sdrNits><hdrRatio>2.527</hdrRatio></point>
+            <point><sdrNits>265.250</sdrNits><hdrRatio>2.451</hdrRatio></point>
+            <point><sdrNits>273.250</sdrNits><hdrRatio>2.379</hdrRatio></point>
+            <point><sdrNits>281.250</sdrNits><hdrRatio>2.311</hdrRatio></point>
+            <point><sdrNits>289.250</sdrNits><hdrRatio>2.247</hdrRatio></point>
+            <point><sdrNits>297.250</sdrNits><hdrRatio>2.187</hdrRatio></point>
+            <point><sdrNits>305.250</sdrNits><hdrRatio>2.129</hdrRatio></point>
+            <point><sdrNits>313.250</sdrNits><hdrRatio>2.075</hdrRatio></point>
+            <point><sdrNits>321.250</sdrNits><hdrRatio>2.023</hdrRatio></point>
+            <point><sdrNits>329.250</sdrNits><hdrRatio>1.974</hdrRatio></point>
+            <point><sdrNits>337.250</sdrNits><hdrRatio>1.927</hdrRatio></point>
+            <point><sdrNits>345.250</sdrNits><hdrRatio>1.883</hdrRatio></point>
+            <point><sdrNits>353.250</sdrNits><hdrRatio>1.840</hdrRatio></point>
+            <point><sdrNits>361.250</sdrNits><hdrRatio>1.799</hdrRatio></point>
+            <point><sdrNits>369.250</sdrNits><hdrRatio>1.760</hdrRatio></point>
+            <point><sdrNits>377.250</sdrNits><hdrRatio>1.723</hdrRatio></point>
+            <point><sdrNits>385.250</sdrNits><hdrRatio>1.687</hdrRatio></point>
+            <point><sdrNits>393.250</sdrNits><hdrRatio>1.653</hdrRatio></point>
+            <point><sdrNits>401.250</sdrNits><hdrRatio>1.620</hdrRatio></point>
+            <point><sdrNits>409.250</sdrNits><hdrRatio>1.588</hdrRatio></point>
+            <point><sdrNits>417.250</sdrNits><hdrRatio>1.558</hdrRatio></point>
+            <point><sdrNits>425.250</sdrNits><hdrRatio>1.529</hdrRatio></point>
+            <point><sdrNits>433.250</sdrNits><hdrRatio>1.500</hdrRatio></point>
+            <point><sdrNits>441.250</sdrNits><hdrRatio>1.473</hdrRatio></point>
+            <point><sdrNits>449.250</sdrNits><hdrRatio>1.447</hdrRatio></point>
+            <point><sdrNits>457.250</sdrNits><hdrRatio>1.422</hdrRatio></point>
+            <point><sdrNits>465.250</sdrNits><hdrRatio>1.397</hdrRatio></point>
+            <point><sdrNits>473.250</sdrNits><hdrRatio>1.373</hdrRatio></point>
+            <point><sdrNits>481.250</sdrNits><hdrRatio>1.351</hdrRatio></point>
+            <point><sdrNits>489.250</sdrNits><hdrRatio>1.329</hdrRatio></point>
+            <point><sdrNits>490.750</sdrNits><hdrRatio>1.325</hdrRatio></point>
+            <point><sdrNits>498.750</sdrNits><hdrRatio>1.328</hdrRatio></point>
+            <point><sdrNits>506.750</sdrNits><hdrRatio>1.332</hdrRatio></point>
+            <point><sdrNits>514.750</sdrNits><hdrRatio>1.336</hdrRatio></point>
+            <point><sdrNits>522.750</sdrNits><hdrRatio>1.340</hdrRatio></point>
+            <point><sdrNits>530.750</sdrNits><hdrRatio>1.343</hdrRatio></point>
+            <point><sdrNits>538.750</sdrNits><hdrRatio>1.346</hdrRatio></point>
+            <point><sdrNits>546.750</sdrNits><hdrRatio>1.350</hdrRatio></point>
+            <point><sdrNits>554.750</sdrNits><hdrRatio>1.353</hdrRatio></point>
+            <point><sdrNits>562.750</sdrNits><hdrRatio>1.356</hdrRatio></point>
+            <point><sdrNits>570.750</sdrNits><hdrRatio>1.359</hdrRatio></point>
+            <point><sdrNits>578.750</sdrNits><hdrRatio>1.362</hdrRatio></point>
+            <point><sdrNits>586.750</sdrNits><hdrRatio>1.365</hdrRatio></point>
+            <point><sdrNits>594.750</sdrNits><hdrRatio>1.367</hdrRatio></point>
+            <point><sdrNits>602.750</sdrNits><hdrRatio>1.370</hdrRatio></point>
+            <point><sdrNits>610.750</sdrNits><hdrRatio>1.373</hdrRatio></point>
+            <point><sdrNits>618.750</sdrNits><hdrRatio>1.375</hdrRatio></point>
+            <point><sdrNits>626.750</sdrNits><hdrRatio>1.378</hdrRatio></point>
+            <point><sdrNits>634.750</sdrNits><hdrRatio>1.380</hdrRatio></point>
+            <point><sdrNits>642.750</sdrNits><hdrRatio>1.383</hdrRatio></point>
+            <point><sdrNits>650.000</sdrNits><hdrRatio>1.385</hdrRatio></point>
         </sdrHdrRatioMap>
     </highBrightnessMode>
-
-    <!-- HDR content raises the backlight above the SDR brightness, up to the maximum
-         of the high brightness mode, and the SDR layers are dimmed to keep their
-         brightness. No limit by the ambient light: the limit is the one for the first
-         lux above the last point, and below the SDR brightness it would dim the screen
-         when the video starts. -->
-    <hdrBrightnessConfig>
-        <brightnessMap>
-            <point><first>100000</first><second>1.0</second></point>
-        </brightnessMap>
-        <brightnessIncreaseDebounceMillis>500</brightnessIncreaseDebounceMillis>
-        <brightnessDecreaseDebounceMillis>3000</brightnessDecreaseDebounceMillis>
-        <screenBrightnessRampIncrease>0.5</screenBrightnessRampIncrease>
-        <screenBrightnessRampDecrease>0.3</screenBrightnessRampDecrease>
-        <minimumHdrPercentOfScreenForNbm>0.25</minimumHdrPercentOfScreenForNbm>
-        <minimumHdrPercentOfScreenForHbm>0.25</minimumHdrPercentOfScreenForHbm>
-        <allowInLowPowerMode>false</allowInLowPowerMode>
-        <sdrHdrRatioMap>
-            <point><first>2.0</first><second>8.0</second></point>
-            <point><first>300.0</first><second>3.0</second></point>
-            <point><first>650.0</first><second>1.38</second></point>
-        </sdrHdrRatioMap>
-    </hdrBrightnessConfig>
 </displayConfiguration>
