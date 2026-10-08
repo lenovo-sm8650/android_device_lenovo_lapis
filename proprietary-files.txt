@@ -1001,7 +1001,7 @@ vendor/lib64/libdolbydecoderprocessor.so
 vendor/lib64/libdolbyeglcore.so
 vendor/lib64/libdolbyottcameracontrol.so
 vendor/lib64/vendor.dolby.dvs-V1-ndk.so
-system/app/DolbyVisionService/DolbyVisionService.apk:system_ext/app/DolbyVisionService/DolbyVisionService.apk
+system/app/DolbyVisionService/DolbyVisionService.apk:system_ext/app/DolbyVisionService/DolbyVisionService.apk;EXTRACT_ONLY;FILEGROUP=DolbyVisionService-stock
 
 # Codec2 libraries the Dolby Vision blobs above were built against (stock
 # vendor and VNDK v34). The ones built from source differ in their C++ class

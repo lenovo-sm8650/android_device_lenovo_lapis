@@ -1,0 +1,61 @@
+//
+// SPDX-FileCopyrightText: 2026 The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+// Stock Dolby Vision service app (gives DVS the panel brightness and the
+// picture mode) with a compat dex prepended, like lenovo/PenService: its DVS
+// client also sends the com.dolby.vision_play broadcast of the stock firmware
+// when the Dolby Vision decoder starts and stops (CABC off in system_server).
+// The stock APK comes from the vendor tree (proprietary-files.txt:
+// EXTRACT_ONLY, FILEGROUP DolbyVisionService-stock). Listed in
+// PRODUCT_SOONG_NAMESPACES in device.mk.
+//
+
+soong_namespace {
+    imports: [
+        "vendor/lenovo/lapis",
+        "device/lenovo/lapis/lenovo/PenService",
+    ],
+}
+
+java_library {
+    name: "DolbyVisionServiceCompatStubs",
+    srcs: ["stubs/**/*.java"],
+    platform_apis: true,
+    installable: false,
+}
+
+java_library {
+    name: "DolbyVisionServiceCompat",
+    srcs: ["src/**/*.java"],
+    libs: ["DolbyVisionServiceCompatStubs"],
+    platform_apis: true,
+    installable: false,
+}
+
+java_genrule {
+    name: "DolbyVisionService-compat-apk",
+    srcs: [
+        ":DolbyVisionServiceCompat",
+        ":DolbyVisionService-stock",
+    ],
+    tools: [
+        "d8",
+        "tb520fu_prepend_dex",
+    ],
+    out: ["DolbyVisionService.apk"],
+    cmd: "$(location d8) --release --no-desugaring --min-api 35 " +
+        "--output $(genDir)/compat.zip $(location :DolbyVisionServiceCompat) && " +
+        "$(location tb520fu_prepend_dex) --apk $(location :DolbyVisionService-stock) " +
+        "--dex-zip $(genDir)/compat.zip --out $(out)",
+}
+
+android_app_import {
+    name: "DolbyVisionService",
+    apk: ":DolbyVisionService-compat-apk",
+    certificate: "platform",
+    system_ext_specific: true,
+    dex_preopt: {
+        enabled: false,
+    },
+}
