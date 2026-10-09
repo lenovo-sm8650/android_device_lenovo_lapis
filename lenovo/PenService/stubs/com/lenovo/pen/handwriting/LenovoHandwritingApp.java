@@ -6,5 +6,5 @@
 package com.lenovo.pen.handwriting;
 
 /** Compile-time stand-in; the real class comes from PenService's own dex. */
-public class LenovoHandwritingApp {
+public class LenovoHandwritingApp extends android.app.Application {
 }

@@ -14,18 +14,20 @@ import kotlin.jvm.internal.Lambda;
  * Replaces the lazy initializer of LenovoHandwritingApp.mZuiHandWritingManager.
  * Stock asks getSystemService("zui_hand_writing"), a ZUI-only service, and
  * throws on null, which crashed PenService from the Lenovo handwriting
- * keyboard. The APK bundles a no-op ZuiHandWritingManager; hand that out.
+ * keyboard. Use the local bridge that restores the user's keyboard.
  * The class name must match the Kotlin-generated one exactly.
  */
 final class LenovoHandwritingApp$mZuiHandWritingManager$2 extends Lambda<ZuiHandWritingManager>
         implements Function0<ZuiHandWritingManager> {
+    private final LenovoHandwritingApp mApp;
 
     LenovoHandwritingApp$mZuiHandWritingManager$2(LenovoHandwritingApp app) {
         super(0);
+        mApp = app;
     }
 
     @Override
     public final ZuiHandWritingManager invoke() {
-        return new ZuiHandWritingManager();
+        return ZuiHandWritingManager.getInstance(mApp);
     }
 }
