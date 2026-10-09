@@ -50,7 +50,7 @@ java_genrule {
     cmd: "$(location d8) --release --no-desugaring --min-api 35 " +
         "--output $(genDir)/compat.zip $(location :PenServiceCompat) && " +
         "$(location tb520fu_prepend_dex) --apk $(location :PenService-stock) " +
-        "--dex-zip $(genDir)/compat.zip --out $(out)",
+        "--dex-zip $(genDir)/compat.zip --remove-pen-ime --out $(out)",
 }
 
 prebuilt_etc {

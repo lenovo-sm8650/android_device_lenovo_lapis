@@ -7,7 +7,9 @@
 
 ART resolves a class from the first dex of the APK that defines it, so the
 compat classes shadow the stock ones with the same name. Everything else is
-copied unchanged, except the retired Lenovo IME service in the binary manifest.
+copied unchanged, except the retired Lenovo IME service in the binary manifest
+when --remove-pen-ime is given (only the APK that carries the duplicate IME
+service needs that; the other callers keep their manifest intact).
 The APK is re-signed and aligned by android_app_import.
 """
 import argparse
@@ -104,6 +106,8 @@ def main():
     ap.add_argument("--apk", required=True)
     ap.add_argument("--dex-zip", required=True)
     ap.add_argument("--out", required=True)
+    ap.add_argument("--remove-pen-ime", action="store_true",
+                    help="strip the retired Lenovo handwriting IME service")
     args = ap.parse_args()
 
     with zipfile.ZipFile(args.dex_zip) as dz:
@@ -118,7 +122,7 @@ def main():
             if info.filename.startswith("META-INF/"):
                 continue  # old signature
             data = src.read(info.filename)
-            if info.filename == "AndroidManifest.xml":
+            if info.filename == "AndroidManifest.xml" and args.remove_pen_ime:
                 data = remove_pen_ime(data)
             m = dex_re.match(info.filename)
             name = info.filename
