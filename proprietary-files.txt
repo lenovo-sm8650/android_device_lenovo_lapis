@@ -1056,6 +1056,13 @@ system/etc/permissions/privapp-permissions-com.zui.udevice.xml:system_ext/etc/pe
 system/etc/sysconfig/hiddenapi-whitelist-com.zui.udevice.xml:system_ext/etc/sysconfig/hiddenapi-whitelist-com.zui.udevice.xml
 system/etc/default-permissions/default-permissions-com.zui.udevice.xml:system_ext/etc/default-permissions/default-permissions-com.zui.udevice.xml
 
+# Lenovo pen config (PenService reads the fixed path /system/etc/pen/pen_config.xml:
+# pen market names, default settings and features such as palm rejection) and
+# its initial package state. The pen firmware updates (etc/pen/dfu) are left
+# out: every dfu entry of the stock pen_config.xml is commented out.
+system/etc/pen/pen_config.xml
+system/etc/sysconfig/initial-stopped-states-com.lenovo.penservice.xml:system_ext/etc/sysconfig/initial-stopped-states-com.lenovo.penservice.xml
+
 # Lenovo keyboard firmware update (pogo keyboards; Olympia = Bluetooth keyboard 17ef:619e)
 system/app/ZuiKeyboardUpdate/ZuiKeyboardUpdate.apk:system_ext/app/ZuiKeyboardUpdate/ZuiKeyboardUpdate.apk;EXTRACT_ONLY;FILEGROUP=ZuiKeyboardUpdate-stock
 system/app/ZuiKeyboardUpdateOlympia/ZuiKeyboardUpdateOlympia.apk:system_ext/app/ZuiKeyboardUpdateOlympia/ZuiKeyboardUpdateOlympia.apk;EXTRACT_ONLY;FILEGROUP=ZuiKeyboardUpdateOlympia-stock
