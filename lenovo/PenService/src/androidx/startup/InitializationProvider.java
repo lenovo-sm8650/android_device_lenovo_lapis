@@ -13,7 +13,7 @@ import android.util.Log;
 
 import com.zui.input.handwriting.ZuiHandWritingManager;
 
-/** Keep stock AndroidX startup and start the IME bridge before Application.onCreate(). */
+/** Keep stock AndroidX startup and start the IME migration before Application.onCreate(). */
 public class InitializationProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
@@ -25,7 +25,7 @@ public class InitializationProvider extends ContentProvider {
             ZuiHandWritingManager.getInstance(context);
         } catch (RuntimeException e) {
             // A bridge failure must not crash this persistent application.
-            Log.e("LenovoHandwriting", "Cannot initialize keyboard return bridge", e);
+            Log.e("LenovoHandwriting", "Cannot initialize handwriting migration", e);
         }
         return true;
     }

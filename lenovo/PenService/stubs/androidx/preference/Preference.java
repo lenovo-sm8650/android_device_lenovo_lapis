@@ -46,6 +46,12 @@ public class Preference {
 
     public void setSummary(CharSequence summary) {}
 
+    public interface OnPreferenceClickListener {
+        boolean onPreferenceClick(Preference preference);
+    }
+
+    public void setOnPreferenceClickListener(OnPreferenceClickListener listener) {}
+
     public boolean isSelectable() {
         throw new RuntimeException("stub");
     }

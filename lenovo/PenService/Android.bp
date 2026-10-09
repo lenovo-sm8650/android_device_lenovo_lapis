@@ -3,9 +3,9 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 // Stock Lenovo PenService (pen settings, buttons, writing haptics UI, EasyJot)
-// with a small compat dex prepended: two helpers of the stock APK use ZUI /
-// Android 14 framework classes that do not exist in Android 17 and would
-// crash the persistent process. The stock APK comes from the vendor tree
+// with a compat dex prepended for ZUI / Android 14 APIs absent in Android 17.
+// Handwriting settings link to Gboard; the duplicate Lenovo IME service is
+// removed from the manifest by tb520fu_prepend_dex. The stock APK comes from the vendor tree
 // (proprietary-files.txt: EXTRACT_ONLY, FILEGROUP PenService-stock), hence the
 // own namespace importing it (the vendor namespace already imports the
 // device one). Listed in PRODUCT_SOONG_NAMESPACES in device.mk.

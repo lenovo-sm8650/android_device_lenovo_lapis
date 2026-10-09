@@ -7,32 +7,18 @@ package com.zui.input.handwriting;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.database.ContentObserver;
-import android.graphics.Color;
-import android.graphics.PixelFormat;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
-/**
- * The stock toolbar calls setHwEnable(3) to return to the keyboard. ZUI implements
- * that in system_server; the class bundled in the APK is only an empty API stub.
- * Keep this user's last enabled, non-auxiliary IME and restore it locally instead.
- * No input text or pen/Bluetooth state is observed.
- */
-public final class ZuiHandWritingManager implements View.OnClickListener {
+/** Removes the retired Lenovo IME and migrates existing selections to an enabled keyboard. */
+public final class ZuiHandWritingManager {
     private static final String TAG = "LenovoHandwriting";
     private static final String PEN_IME =
             "com.lenovo.penservice/com.lenovo.pen.handwriting.service.HandwritingIme";
@@ -46,8 +32,6 @@ public final class ZuiHandWritingManager implements View.OnClickListener {
     final Handler mHandler = new Handler(Looper.getMainLooper());
     final SharedPreferences mPrefs;
     final InputMethodManager mImm;
-    final WindowManager mWindowManager;
-    TextView mReturnButton;
 
     public static synchronized ZuiHandWritingManager getInstance(Context context) {
         if (sInstance == null) sInstance = new ZuiHandWritingManager(context);
@@ -60,7 +44,6 @@ public final class ZuiHandWritingManager implements View.OnClickListener {
         mPrefs = mContext.createDeviceProtectedStorageContext()
                 .getSharedPreferences("handwriting_ime_compat", Context.MODE_PRIVATE);
         mImm = mContext.getSystemService(InputMethodManager.class);
-        mWindowManager = mContext.getSystemService(WindowManager.class);
         ContentResolver resolver = mContext.getContentResolver();
         ContentObserver observer = new SettingsObserver(mHandler, this);
         resolver.registerContentObserver(Settings.Secure.getUriFor(
@@ -72,36 +55,48 @@ public final class ZuiHandWritingManager implements View.OnClickListener {
         mHandler.post(new Refresh(this));
     }
 
-    public void setHwEnable(int enabled) {
-        if (enabled == 3) mHandler.post(new ReturnKeyboard(this, "stock keyboard request"));
-    }
-
-    public void setToolType(int toolType) {
-        if (toolType == 1) mHandler.post(new ReturnKeyboard(this, "finger input"));
-    }
-
-    // These old cursor-detection callbacks are not called by this stock PenService.
+    // Retained for stock callers, although the Lenovo IME is no longer registered.
+    public void setHwEnable(int enabled) { mHandler.post(new Refresh(this)); }
+    public void setToolType(int toolType) {}
     public void registerIMEClient(IIMEClient client) {}
     public void unregisterIMEClient(IIMEClient client) {}
 
     void refresh() {
         try {
-            String current = Settings.Secure.getString(mContext.getContentResolver(),
+            ContentResolver resolver = mContext.getContentResolver();
+            String current = Settings.Secure.getString(resolver,
                     Settings.Secure.DEFAULT_INPUT_METHOD);
-            if (!PEN_IME.equals(current)) {
-                hideReturnButton();
-                if (isKeyboard(current, mImm.getEnabledInputMethodList())) {
-                    mPrefs.edit().putString(LAST_KEYBOARD, current).apply();
-                }
-                return;
+            if (PEN_IME.equals(current)) {
+                restoreKeyboard("retired Lenovo IME");
+            } else if (isKeyboard(current, mImm.getEnabledInputMethodList())) {
+                mPrefs.edit().putString(LAST_KEYBOARD, current).apply();
             }
-            if (Settings.Secure.getInt(mContext.getContentResolver(), HANDWRITING, 1) == 0) {
-                restoreKeyboard("handwriting disabled");
-            } else {
-                showReturnButton();
+            if (Settings.Secure.getInt(resolver, HANDWRITING, 0) != 0) {
+                Settings.Secure.putInt(resolver, HANDWRITING, 0);
+            } else if (Settings.Secure.getString(resolver, HANDWRITING) == null) {
+                Settings.Secure.putInt(resolver, HANDWRITING, 0);
+            }
+            // Stock Application.onCreate() adds this ID even without a manifest service.
+            // Remove only that entry, retaining all other IMEs and their subtype suffixes.
+            String enabled = Settings.Secure.getString(resolver,
+                    Settings.Secure.ENABLED_INPUT_METHODS);
+            if (enabled != null) {
+                StringBuilder kept = new StringBuilder();
+                boolean removed = false;
+                for (String entry : enabled.split(":")) {
+                    String id = entry.split(";", 2)[0];
+                    if (PEN_IME.equals(id)) {
+                        removed = true;
+                    } else {
+                        if (kept.length() > 0) kept.append(':');
+                        kept.append(entry);
+                    }
+                }
+                if (removed) Settings.Secure.putString(resolver,
+                        Settings.Secure.ENABLED_INPUT_METHODS, kept.toString());
             }
         } catch (RuntimeException e) {
-            Log.e(TAG, "Cannot update keyboard return state", e);
+            Log.e(TAG, "Cannot migrate retired handwriting IME", e);
         }
     }
 
@@ -132,11 +127,8 @@ public final class ZuiHandWritingManager implements View.OnClickListener {
                     Settings.Secure.DEFAULT_INPUT_METHOD))) return;
             String target = chooseKeyboard(mImm.getEnabledInputMethodList());
             if (target == null) {
-                showReturnButton();
-                Toast.makeText(mContext, isKorean() ? "사용할 키보드를 먼저 켜 주세요."
-                        : "Enable a keyboard first.", Toast.LENGTH_LONG).show();
                 mImm.showInputMethodPicker();
-                Log.w(TAG, "No enabled keyboard for return request");
+                Log.w(TAG, "No enabled keyboard for Lenovo IME migration");
                 return;
             }
             // PenService runs under uid 1000, for which setInputMethod(null, id)
@@ -144,63 +136,10 @@ public final class ZuiHandWritingManager implements View.OnClickListener {
             Settings.Secure.putInt(resolver, Settings.Secure.SELECTED_INPUT_METHOD_SUBTYPE, -1);
             if (Settings.Secure.putString(resolver, Settings.Secure.DEFAULT_INPUT_METHOD, target)) {
                 Log.i(TAG, "Restored keyboard: " + target + " (" + reason + ")");
-                hideReturnButton();
             }
         } catch (RuntimeException e) {
             Log.e(TAG, "Cannot restore keyboard", e);
         }
-    }
-
-    @Override
-    public void onClick(View view) {
-        restoreKeyboard("keyboard return button");
-    }
-
-    boolean isKorean() {
-        return "ko".equals(mContext.getResources().getConfiguration().getLocales().get(0)
-                .getLanguage());
-    }
-
-    int dp(int value) {
-        return Math.round(value * mContext.getResources().getDisplayMetrics().density);
-    }
-
-    void showReturnButton() {
-        if (mReturnButton != null) return;
-        boolean dark = (mContext.getResources().getConfiguration().uiMode
-                & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
-        TextView button = new TextView(mContext);
-        button.setText(isKorean() ? "키보드" : "Keyboard");
-        button.setContentDescription(isKorean() ? "키보드로 돌아가기" : "Return to keyboard");
-        button.setTextSize(16);
-        button.setTextColor(dark ? Color.WHITE : Color.BLACK);
-        button.setGravity(Gravity.CENTER);
-        button.setPadding(dp(20), 0, dp(20), 0);
-        button.setMinimumHeight(dp(48));
-        GradientDrawable background = new GradientDrawable();
-        background.setColor(dark ? Color.rgb(48, 48, 48) : Color.rgb(245, 245, 245));
-        background.setCornerRadius(dp(24));
-        button.setBackground(background);
-        button.setElevation(dp(6));
-        button.setOnClickListener(this);
-        WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.WRAP_CONTENT, dp(48),
-                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                        | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
-                PixelFormat.TRANSLUCENT);
-        params.gravity = Gravity.BOTTOM | Gravity.END;
-        params.x = dp(16);
-        params.y = dp(32);
-        params.setTitle("Lenovo handwriting keyboard return");
-        mWindowManager.addView(button, params);
-        mReturnButton = button;
-    }
-
-    void hideReturnButton() {
-        if (mReturnButton == null) return;
-        mWindowManager.removeView(mReturnButton);
-        mReturnButton = null;
     }
 
     static final class SettingsObserver extends ContentObserver {
@@ -218,13 +157,4 @@ public final class ZuiHandWritingManager implements View.OnClickListener {
         @Override public void run() { owner.refresh(); }
     }
 
-    static final class ReturnKeyboard implements Runnable {
-        final ZuiHandWritingManager owner;
-        final String reason;
-        ReturnKeyboard(ZuiHandWritingManager owner, String reason) {
-            this.owner = owner;
-            this.reason = reason;
-        }
-        @Override public void run() { owner.restoreKeyboard(reason); }
-    }
 }
