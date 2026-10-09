@@ -4,6 +4,8 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
+import re
+
 from extract_utils.fixups_blob import (
     blob_fixup,
     blob_fixups_user_type,
@@ -137,7 +139,16 @@ OPENCL_SYMBOLS = (
 )
 
 blob_fixups: blob_fixups_user_type = {
-    # WiFi Display (OnePlus QSSI of Android 16, see proprietary-files.txt)
+    # WiFi Display (stock system side, see proprietary-files.txt)
+    # IGraphicBufferConsumer::releaseBuffer has no EGLDisplay and EGLSyncKHR
+    # arguments any more (libgui BQ_GL_FENCE_CLEANUP), and the old call put
+    # null in the place of the release fence: pass the fence (x5) as the third
+    # argument (mov x3, xzr -> mov x3, x5 before mov x4, xzr; blr x8).
+    'system_ext/lib64/libwfdavenhancements.so': blob_fixup()
+        .binary_regex_replace(
+            re.escape(bytes.fromhex('e3031faae4031faa00013fd6')),
+            bytes.fromhex('e30305aae4031faa00013fd6'),
+        ),
     'system_ext/lib64/libwfdcommonutils.so': blob_fixup()
         .remove_needed('libheif.so'),
     # AudioSystem moved from libaudioclient to libaudiobase in Android 17.
