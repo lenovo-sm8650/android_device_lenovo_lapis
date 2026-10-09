@@ -24,9 +24,46 @@ TB520FU, codename lapis, Qualcomm Snapdragon 8 Gen 3).
 | Stock firmware | `ZUI_17.5.10.362_260719_ROW` |
 | Shipping API | 34 |
 
-Status: used daily. SELinux enforcing, dm-verity on, and the bootloader can be
-relocked (see "Verified boot"). Widevine L1 (Netflix HD), Play Integrity
-STRONG(RKP Sign), Thanks to [sungwon1002](https://github.com/sungwon1002).
+
+## Features
+
+Highlights of the PixelOS (`seventeen`) build:
+
+### Device features
+
+- **Widevine L1** — Netflix HD playback.
+- **HDR, HDR10+ and Dolby Vision** — HDR video playback with the device's display and media codecs.
+- **Dolby Atmos** — LunarisDolby settings, sound profiles and equalizer.
+- **Play Integrity** — BASIC, DEVICE and STRONG.
+- **OTA updates** — full and incremental updates through Settings > System > System update.
+- **Lenovo Pencil** — automatic pairing, battery and charging status, writing haptics, pen buttons and the Lenovo pen settings.
+- **Lenovo keyboard** — touchpad controls, configurable shortcut keys, backlight, firmware updates and desktop mode integration.
+- **Folio case** — close the cover to sleep and lock; open it to wake.
+- **Adaptive refresh rate** — 30/60/90/120/144 Hz display modes with adaptive switching.
+- **Battery controls** — charging limits, battery protection, bypass charging and standby power saving.
+- **Natural colors** — ambient white balance with adjustable strength.
+- **Memory extension** — storage-backed virtual memory with a selectable size.
+- **Double tap to wake** and a **PC mode Quick Settings tile**.
+- **Video motion smoothing** — per-app Qualcomm VPP frame interpolation (MEMC).
+
+HDR and Dolby playback depends on the app, content and streaming subscription.
+
+### Custom features
+
+Available in Settings > System > Custom Tweaks:
+
+- **Per-app CPU/GPU performance** — separate Power saving, Balanced, Default and custom limits for each app, with optional background memory cleanup for games. Profiles apply while the app is on screen and return to normal when you leave it.
+- **Device identity spoofing** — choose the brand, manufacturer and model reported to selected apps.
+- **Play Store installer reporting** — make selected apps recognize Google Play as their installer.
+
+## Working
+
+- Display, Wi-Fi, Bluetooth and almost all other features tested so far.
+- Miracast (wireless display).
+
+## Not working
+
+None found so far.
 
 ## Downloads
 
@@ -190,6 +227,7 @@ trees, merged into one tree with the OnePlus-specific parts removed.
   changed in Android 17 and the PixelOS look of the pen settings (card groups).
 - `lenovo/KeyboardUpdate/` — the stock keyboard firmware updaters with a
   compat dex that gives their page the PixelOS look (no resource overlays).
+- `configs/displayconfig/` — display configuration of the panel.
 - `system_ext.prop` — besides the stock values: `ro.config.lgsi.device.type=pad`
   (the stock Lenovo apps use the tablet dialog layout with it) and a linear
   brightness slider like stock ZUI.
@@ -227,3 +265,10 @@ updates. Switching to other keys later needs a data wipe.
 `<dump>` is an extracted stock firmware containing `vendor/`, `odm/`,
 `system_ext/` and `product/`. Not needed when the vendor repository is
 synced.
+
+## Credits
+- **[LineageOS Team](https://github.com/LineageOS)** — [android_device_oneplus_caihong](https://github.com/LineageOS/android_device_oneplus_caihong), [android_kernel_oneplus_sm8650](https://github.com/LineageOS/android_kernel_oneplus_sm8650)
+- **[PixelOS Team](https://github.com/PixelOS-AOSP)** — [PixelOS-AOSP](https://github.com/orgs/PixelOS-AOSP/repositories)
+- **[miner7222](https://github.com/miner7222)** — [Lenovo-SM8850](https://github.com/Lenovo-SM8850/android_hardware_lenovo)
+- **[Pong-Development](https://github.com/Pong-Development)** — [hardware_dolby](https://github.com/Pong-Development/hardware_dolby)
+- **[sungwon1002](https://github.com/sungwon1002)** — [android_device_lenovo_TB710FU](https://github.com/sungwon1002/android_device_lenovo_TB710FU)
