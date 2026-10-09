@@ -16,3 +16,7 @@ ro.vendor.tb520fu.dtb_region    u:object_r:vendor_tb520fu_region_prop:s0 exact s
 # Dolby Vision
 persist.vendor.dolbyv.  u:object_r:vendor_dolbyv_prop:s0
 vendor.dolbyv.          u:object_r:vendor_dolbyv_prop:s0
+
+# SPU (StrongBox): stock labels
+vendor.spu.rkp_enabled               u:object_r:vendor_disable_spu_prop:s0 exact bool
+ro.odm.lenovo.supported_csr_type     u:object_r:vendor_lenovotb_init_prop:s0 exact string
