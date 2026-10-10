@@ -31,32 +31,7 @@
     </screenBrightnessMap>
     <screenBrightnessDefault>0.2862</screenBrightnessDefault>
 
-    <!-- Thermal throttling: the levels of the Pixel configurations (Pixel Tablet,
-         Pixel 7 Pro: 465, 297, 213 and 150 nits). The skin thresholds of the thermal
-         HAL start at 48 C (light), so normal use is not throttled; the stock firmware
-         had no limit of its own (config_zui_enter/exitHbmTemperature 0). -->
-    <thermalThrottling>
-        <brightnessThrottlingMap>
-            <brightnessThrottlingPoint>
-                <thermalStatus>light</thermalStatus>
-                <!-- 465 nits -->
-                <brightness>0.713583</brightness>
-            </brightnessThrottlingPoint>
-            <brightnessThrottlingPoint>
-                <thermalStatus>moderate</thermalStatus>
-                <!-- 297 nits -->
-                <brightness>0.454387</brightness>
-            </brightnessThrottlingPoint>
-            <brightnessThrottlingPoint>
-                <thermalStatus>severe</thermalStatus>
-                <!-- 213 nits -->
-                <brightness>0.323622</brightness>
-            </brightnessThrottlingPoint>
-            <brightnessThrottlingPoint>
-                <thermalStatus>critical</thermalStatus>
-                <!-- 150 nits -->
-                <brightness>0.228346</brightness>
-            </brightnessThrottlingPoint>
-        </brightnessThrottlingMap>
-    </thermalThrottling>
+    <!-- Keep the normal brightness range up to 650 nits at every thermal status.
+         SunlightHbmController disables only the extra sunlight HBM boost when the
+         skin thermal status reaches LIGHT. -->
 </displayConfiguration>
