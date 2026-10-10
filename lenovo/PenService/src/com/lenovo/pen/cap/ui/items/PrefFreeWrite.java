@@ -9,7 +9,7 @@ import com.lenovo.pen.cap.base.PrefItem;
 import com.lenovo.pen.cap.ui.SettingsFragment;
 import com.lenovo.pen.handwriting.GboardHandwritingSettings;
 
-/** Keeps the translated handwriting title, replacing only this row's summary and target. */
+/** Keeps the translated handwriting title and opens Gboard without a row summary. */
 public class PrefFreeWrite extends PrefItem implements Preference.OnPreferenceClickListener {
     public PrefFreeWrite(SettingsFragment fragment) {
         super(fragment);
@@ -22,7 +22,7 @@ public class PrefFreeWrite extends PrefItem implements Preference.OnPreferenceCl
                 getContext().getPackageName());
     }
 
-    @Override public void update() { getPref().setSummary("Gboard"); }
+    @Override public void update() { getPref().setSummary(null); }
     @Override public boolean onPreferenceClick(Preference preference) {
         openWriteActivity();
         return true;

@@ -19,15 +19,43 @@ public final class GboardHandwritingSettings {
         for (String activity : new String[] {
                 "com.google.android.apps.inputmethod.latin.stylus.StylusSettingsActivity",
                 "com.google.android.apps.inputmethod.latin.preference.SettingsActivity"}) {
+            Intent target = new Intent().setClassName(PACKAGE, activity);
+            // The Settings trampoline starts asynchronously, so check the target
+            // before launching it to preserve the fallback for older Gboard versions.
+            if (target.resolveActivity(context.getPackageManager()) == null) {
+                continue;
+            }
             try {
-                context.startActivity(new Intent().setClassName(PACKAGE, activity)
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                if (openEmbedded(context, target)) return;
+                context.startActivity(target.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 return;
             } catch (ActivityNotFoundException | SecurityException e) {
                 Log.w("LenovoHandwriting", "Gboard settings unavailable: " + activity);
             }
         }
-        context.startActivity(new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+        Intent target = new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
+        if (!openEmbedded(context, target)) {
+            context.startActivity(target.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+        }
+    }
+
+    private static boolean openEmbedded(Context context, Intent target) {
+        Intent embedded = new Intent(Settings.ACTION_SETTINGS_EMBED_DEEP_LINK_ACTIVITY)
+                .setPackage("com.android.settings")
+                .putExtra(Settings.EXTRA_SETTINGS_EMBEDDED_DEEP_LINK_INTENT_URI,
+                        target.toUri(Intent.URI_INTENT_SCHEME))
+                .putExtra(Settings.EXTRA_SETTINGS_EMBEDDED_DEEP_LINK_HIGHLIGHT_MENU_KEY,
+                        "top_level_system")
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (embedded.resolveActivity(context.getPackageManager()) == null) {
+            return false;
+        }
+        try {
+            context.startActivity(embedded);
+            return true;
+        } catch (ActivityNotFoundException | SecurityException e) {
+            Log.w("LenovoHandwriting", "Settings embedding unavailable", e);
+            return false;
+        }
     }
 }
