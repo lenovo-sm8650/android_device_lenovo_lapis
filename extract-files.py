@@ -139,6 +139,13 @@ OPENCL_SYMBOLS = (
 )
 
 blob_fixups: blob_fixups_user_type = {
+    # Do not expose the FM input as a permanently connected recording device.
+    # Recorder otherwise prefers it over the tablet's built-in microphones.
+    (
+        'vendor/etc/audio/sku_pineapple/audio_policy_configuration.xml',
+        'vendor/etc/audio/sku_pineapple_qssi/audio_policy_configuration.xml',
+    ): blob_fixup()
+        .regex_replace(r'(?m)^[ \t]*<item>FM Tuner</item>\r?\n', ''),
     # WiFi Display (stock system side, see proprietary-files.txt)
     # IGraphicBufferConsumer::releaseBuffer has no EGLDisplay and EGLSyncKHR
     # arguments any more (libgui BQ_GL_FENCE_CLEANUP), and the old call put
