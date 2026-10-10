@@ -4,8 +4,10 @@
  */
 package com.lenovo.pen.handwriting;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.provider.Settings;
 import android.util.Log;
@@ -16,6 +18,9 @@ public final class GboardHandwritingSettings {
     private GboardHandwritingSettings() {}
 
     public static void open(Context context) {
+        Activity hostActivity = findActivity(context);
+        if (hostActivity != null && openInCurrentTask(hostActivity)) return;
+
         for (String activity : new String[] {
                 "com.google.android.apps.inputmethod.latin.stylus.StylusSettingsActivity",
                 "com.google.android.apps.inputmethod.latin.preference.SettingsActivity"}) {
@@ -36,6 +41,32 @@ public final class GboardHandwritingSettings {
         Intent target = new Intent(Settings.ACTION_INPUT_METHOD_SETTINGS);
         if (!openEmbedded(context, target)) {
             context.startActivity(target.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+        }
+    }
+
+    private static Activity findActivity(Context context) {
+        while (context instanceof ContextWrapper) {
+            if (context instanceof Activity) return (Activity) context;
+            Context base = ((ContextWrapper) context).getBaseContext();
+            if (base == context) break;
+            context = base;
+        }
+        return null;
+    }
+
+    private static boolean openInCurrentTask(Activity activity) {
+        // Settings and PenService share the system UID. This private Settings
+        // trampoline registers the Gboard pane without creating another home
+        // activity or clearing the existing pen-settings back stack.
+        Intent intent = new Intent().setClassName("com.android.settings",
+                "com.android.settings.inputmethod.StylusHandwritingSettingsActivity");
+        if (intent.resolveActivity(activity.getPackageManager()) == null) return false;
+        try {
+            activity.startActivity(intent);
+            return true;
+        } catch (ActivityNotFoundException | SecurityException e) {
+            Log.w("LenovoHandwriting", "In-task Settings entry unavailable", e);
+            return false;
         }
     }
 
