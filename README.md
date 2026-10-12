@@ -63,7 +63,7 @@ Available in Settings > System > Custom Tweaks:
 
 ## Not working
 
-None found so far.
+Not found yet..
 
 ## Downloads
 
