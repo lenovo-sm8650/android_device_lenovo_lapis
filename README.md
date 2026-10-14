@@ -61,10 +61,12 @@ kernel):
 | `kernel/lenovo/sm8650` | `android_kernel_lenovo_sm8650` | Android common kernel `android14-6.1` at `2ecae636cf9b` (the source of the stock GKI kernel) plus the Qualcomm UAPI headers |
 | `vendor/lenovo/lapis` | `proprietary_vendor_lenovo_lapis` | device blobs (Git LFS for files over 50 MB) |
 | `vendor/lenovo/sm8650-common` | `proprietary_vendor_lenovo_sm8650-common` | platform blobs |
+| `vendor/lineage` | `android_vendor_lineage` | LineageOS `vendor/lineage` with the kernel build change in Building |
 
 Every repository has a `lineage-24.0` and a `seventeen` branch;
 `lineage.dependencies` lists them for roomservice. The rest of the source is
-LineageOS 24 as published, apart from the `vendor/lineage` change in Building.
+LineageOS 24 as published; the local manifest below puts the `vendor/lineage`
+fork in place of the original.
 
 ## Kernel
 
@@ -101,6 +103,9 @@ repo sync -c -j$(nproc)
 <manifest>
   <remote name="lapis" fetch="https://github.com/lenovo-sm8650" revision="lineage-24.0" />
 
+  <!-- Replaced by the fork below -->
+  <remove-project name="LineageOS/android_vendor_lineage" />
+
   <project name="android_device_lenovo_lapis" path="device/lenovo/lapis" remote="lapis" />
   <project name="android_device_lenovo_lapis-kernel" path="device/lenovo/lapis-kernel" remote="lapis" />
   <project name="android_device_lenovo_sm8650-common" path="device/lenovo/sm8650-common" remote="lapis" />
@@ -108,6 +113,7 @@ repo sync -c -j$(nproc)
   <project name="android_kernel_lenovo_sm8650" path="kernel/lenovo/sm8650" remote="lapis" />
   <project name="proprietary_vendor_lenovo_lapis" path="vendor/lenovo/lapis" remote="lapis" />
   <project name="proprietary_vendor_lenovo_sm8650-common" path="vendor/lenovo/sm8650-common" remote="lapis" />
+  <project name="android_vendor_lineage" path="vendor/lineage" remote="lapis" />
 </manifest>
 ```
 
@@ -116,15 +122,10 @@ repo sync -c -j$(nproc)
 All GKI modules built from `kernel/lenovo/sm8650` go to system_dlkm and the
 vendor modules are the stock prebuilts, so the kernel build of LineageOS
 (`vendor/lineage/build/tasks/kernel.mk`) has no vendor_dlkm modules of its
-own. It still installs that empty set, which replaces `modules.dep` and
-`modules.load` of the prebuilt vendor modules and fails on their load list.
-Skip it locally once after each sync of `vendor/lineage`:
+own. The original still installs that empty set, which replaces
+`modules.dep` and `modules.load` of the prebuilt vendor modules and fails on
+their load list; the `vendor/lineage` fork skips it.
 
-```bash
-git -C vendor/lineage apply ../../device/lenovo/lapis/patches/vendor_lineage-kernel-skip-empty-vendor-modules.patch
-```
-
-Then:
 
 ```bash
 source build/envsetup.sh
@@ -166,7 +167,6 @@ trees, merged into one tree with the OnePlus-specific parts removed.
 - `lenovo/KeyboardUpdate/` — the stock keyboard firmware updaters with a
   compat dex that gives their page the Settings look (no resource overlays).
 - `configs/displayconfig/` — display configuration of the panel.
-- `patches/` — the local `vendor/lineage` change from Building.
 - `system_ext.prop` — besides the stock values: `ro.config.lgsi.device.type=pad`
   (the stock Lenovo apps use the tablet dialog layout with it) and a linear
   brightness slider like stock ZUI.
