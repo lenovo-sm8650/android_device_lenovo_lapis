@@ -58,12 +58,12 @@ Available in Settings > System > Custom Tweaks:
 
 ## Working
 
-- Display, Wi-Fi, Bluetooth and almost all other features tested so far.
+- Display, Wi-Fi, Bluetooth and almost all other features.
 - Miracast (wireless display).
 
 ## Not working
 
-None found so far.
+None
 
 ## Downloads
 
