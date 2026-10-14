@@ -146,6 +146,13 @@ blob_fixups: blob_fixups_user_type = {
         'vendor/etc/audio/sku_pineapple_qssi/audio_policy_configuration.xml',
     ): blob_fixup()
         .regex_replace(r'(?m)^[ \t]*<item>FM Tuner</item>\r?\n', ''),
+    # Quick notes open ZUI Notes, which is not part of the build: keep both
+    # PenService quick note switches off until the user turns them on.
+    'system/etc/pen/pen_config.xml': blob_fixup()
+        .regex_replace(
+            r'(name="pen_set_quick_create_(?:click|screenoff)_notes">)1<',
+            r'\g<1>0<',
+        ),
     # WiFi Display (stock system side, see proprietary-files.txt)
     # IGraphicBufferConsumer::releaseBuffer has no EGLDisplay and EGLSyncKHR
     # arguments any more (libgui BQ_GL_FENCE_CLEANUP), and the old call put
