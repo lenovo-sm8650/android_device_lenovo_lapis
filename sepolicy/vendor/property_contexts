@@ -13,6 +13,9 @@ vendor.camera.sn.               u:object_r:vendor_camera_prop:s0
 # Package variant (dtb region), see init.tb520fu.region.sh
 ro.vendor.tb520fu.dtb_region    u:object_r:vendor_tb520fu_region_prop:s0 exact string
 
+# A Lenovo charge limit holds charging, see health/main.cpp
+vendor.tb520fu.charge_hold      u:object_r:vendor_tb520fu_charge_hold_prop:s0 exact bool
+
 # Dolby Vision
 persist.vendor.dolbyv.  u:object_r:vendor_dolbyv_prop:s0
 vendor.dolbyv.          u:object_r:vendor_dolbyv_prop:s0

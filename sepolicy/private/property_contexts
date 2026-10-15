@@ -2,7 +2,3 @@
 # Settings; the platform label (system_prop, via "sys.") is not readable by
 # platform_app, so it would silently stay false there. See system_ext.prop.
 sys.brightness.disable_gamma_conversion u:object_r:exported3_system_prop:s0 exact bool
-
-# A Lenovo charge limit holds charging: set by tb520fu-input in the system
-# server, read by the health HAL (vendor) to report LONG_LIFE.
-sys.tb520fu.charge_hold u:object_r:tb520fu_charge_hold_prop:s0 exact bool

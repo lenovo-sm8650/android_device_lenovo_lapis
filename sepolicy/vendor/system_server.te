@@ -1,2 +1,2 @@
 # tb520fu-input BatteryController: a Lenovo charge limit holds charging
-set_prop(system_server, tb520fu_charge_hold_prop)
+set_prop(system_server, vendor_tb520fu_charge_hold_prop)

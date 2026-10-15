@@ -1,3 +1,0 @@
-# A Lenovo charge limit holds charging: set by tb520fu-input in the system
-# server, read by the health HAL (vendor) to report LONG_LIFE.
-system_restricted_prop(tb520fu_charge_hold_prop)

@@ -51,7 +51,7 @@ using aidl::android::hardware::health::HealthInfo;
  * bypass charging (tb520fu-input BatteryController). Report that as LONG_LIFE
  * so SystemUI shows the "charging on hold" (defend) state like a Pixel with
  * charging optimization, instead of the charging bolt. BatteryController sets
- * sys.tb520fu.charge_hold while one of them holds charging; any other stop
+ * vendor.tb520fu.charge_hold while one of them holds charging; any other stop
  * (thermal mitigation, a weak charger) stays NOT_CHARGING, as nothing in
  * Settings can lift it.
  */
@@ -64,7 +64,7 @@ class TB520FUHealth : public Health {
         bool plugged = info->chargerAcOnline || info->chargerUsbOnline || info->chargerDockOnline;
         if (plugged && info->batteryStatus == BatteryStatus::NOT_CHARGING &&
             info->batteryHealth == BatteryHealth::GOOD &&
-            property_get_bool("sys.tb520fu.charge_hold", false)) {
+            property_get_bool("vendor.tb520fu.charge_hold", false)) {
             info->chargingState = BatteryChargingState::LONG_LIFE;
         }
     }
