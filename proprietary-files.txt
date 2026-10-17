@@ -384,6 +384,7 @@ vendor/etc/audio/sku_pineapple_qssi/audio_policy_configuration.xml
 vendor/etc/audio_policy_configuration.xml
 vendor/etc/audio_policy_volumes.xml
 vendor/etc/backend_conf.xml
+vendor/etc/bluetooth_qti_audio_policy_configuration.xml
 vendor/etc/bluetooth_qti_hearing_aid_audio_policy_configuration.xml
 vendor/etc/card-defs.xml
 vendor/etc/default_volume_tables.xml
