@@ -28,3 +28,13 @@ ro.config.lgsi.device.type=pad
 # darker than on ZUI while the peak was the same. AOSP SettingsLib has the
 # switch for this; label: sepolicy/private/property_contexts.
 sys.brightness.disable_gamma_conversion=true
+
+# Desktop mode keeps the home screen (icons, widgets) behind the freeform windows and the
+# launcher shows its pinned desktop taskbar on the desktop-first display. Without these AOSP
+# shows only the desktop wallpaper (config_showHomeBehindDesktop and
+# config_enterDesktopByDefaultOnFreeformDisplay are false and not overlaid). The properties,
+# not the resources, because the prebuilt Pixel Launcher reads Google's framework resource
+# IDs (see persist.wm.debug.desktop_mode_enforce_device_restrictions above); the WM Shell and
+# the launcher read the same properties first (DesktopStateImpl, DesktopModeStatus).
+persist.wm.debug.show_home_behind_desktop=true
+persist.wm.debug.enter_desktop_by_default_on_freeform_display=true

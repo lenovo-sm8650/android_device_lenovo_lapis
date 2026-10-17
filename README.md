@@ -44,7 +44,7 @@ Highlights of the PixelOS (`seventeen`) build:
 - **Natural colors** (Settings > Display) — ambient white balance with adjustable strength.
 - **Memory expansion** (Advanced features > Performance) — storage-backed virtual memory with a selectable size.
 - **Game performance** (Advanced features > Performance, customizations build only) — separate Power saving, Balanced, Default and custom CPU/GPU limits for each app, with optional background memory cleanup for games. Profiles apply while the app is on screen and return to normal when you leave it.
-- **Double tap to wake** and a **PC mode Quick Settings tile**.
+- **Double tap to wake** and a **Desktop windowing Quick Settings tile**.
 - **Video motion smoothing** — per-app Qualcomm VPP frame interpolation (MEMC).
 
 HDR and Dolby playback depends on the app, content and streaming subscription.
