@@ -4,9 +4,9 @@
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources>
-    <!-- White balance lives in Lenovo features (LenovoParts) together with its
-         strength slider; needs patches/packages_apps_Settings-0001. -->
-    <bool name="config_show_display_white_balance">false</bool>
+    <!-- Lenovo battery controls on Settings > Battery (charging mode, battery
+         maintenance, standby saver, bypass charging), applied by lenovo-input. -->
+    <bool name="config_lenovo_battery_features">true</bool>
 
     <!-- Regulatory labels: the stock e-label of TB520FU (system/etc/deviceinfo/e_label_wifi*.png),
          shown like the stock ZUI Settings. -->

@@ -40,21 +40,21 @@ Highlights of the PixelOS (`seventeen`) build:
 - **Lenovo keyboard** — touchpad controls, configurable shortcut keys, backlight, firmware updates and desktop mode integration.
 - **Folio case** — close the cover to sleep and lock; open it to wake.
 - **Adaptive refresh rate** — 30/60/90/120/144 Hz display modes with adaptive switching.
-- **Battery controls** — charging limits, battery protection, bypass charging and standby power saving.
-- **Natural colors** — ambient white balance with adjustable strength.
-- **Memory extension** — storage-backed virtual memory with a selectable size.
+- **Battery controls** (Settings > Battery) — charge optimization (charging limits, battery protection, battery maintenance), bypass charging and standby power saving.
+- **Natural colors** (Settings > Display) — ambient white balance with adjustable strength.
+- **Memory expansion** (Advanced features > Performance) — storage-backed virtual memory with a selectable size.
+- **Game performance** (Advanced features > Performance, customizations build only) — separate Power saving, Balanced, Default and custom CPU/GPU limits for each app, with optional background memory cleanup for games. Profiles apply while the app is on screen and return to normal when you leave it.
 - **Double tap to wake** and a **PC mode Quick Settings tile**.
 - **Video motion smoothing** — per-app Qualcomm VPP frame interpolation (MEMC).
 
 HDR and Dolby playback depends on the app, content and streaming subscription.
 
-### Custom features
+### Experimental features
 
-Available in Settings > System > Custom Tweaks:
+Available in Settings > Advanced features > Experimental features (customizations build only):
 
-- **Per-app CPU/GPU performance** — separate Power saving, Balanced, Default and custom limits for each app, with optional background memory cleanup for games. Profiles apply while the app is on screen and return to normal when you leave it.
-- **Device identity spoofing** — choose the brand, manufacturer and model reported to selected apps.
-- **Play Store installer reporting** — make selected apps recognize Google Play as their installer.
+- **App compatibility** — choose the brand, manufacturer and model reported to selected apps, and make selected apps recognize Google Play as their installer.
+- **Play Integrity Fix** — the [PlayIntegrityFix fork](https://github.com/wnduddld0513/PlayIntegrityFix/tree/seventeen) (GPL-3.0) built into the ROM, without root; on by default, the device profile is fetched on first boot.
 
 ## Working
 
@@ -177,6 +177,9 @@ repo sync -c -j$(nproc)
   <project name="android_packages_apps_Settings" path="packages/apps/Settings" remote="lapis" />
   <project name="android_packages_apps_Updater" path="packages/apps/Updater" remote="lapis" />
   <project name="android_vendor_lineage" path="vendor/lineage" remote="lapis" />
+
+  <!-- Play Integrity Fix (customizations, GPL-3.0) -->
+  <project name="wnduddld0513/PlayIntegrityFix" path="packages/apps/PlayIntegrityFix" remote="github" revision="seventeen" />
 </manifest>
 ```
 
@@ -233,16 +236,23 @@ trees, merged into one tree with the OnePlus-specific parts removed.
 
 In `hardware/lenovo`:
 
-- `packages/LenovoParts/` — "Lenovo features" in Settings > System:
-  charging modes, white balance strength, memory extension (zram writeback),
-  pen settings, folio case mode, and the physical keyboard page of the stock
-  settings with the keyboard firmware update.
+- `packages/LenovoParts/` — "Advanced features" and "Pen & keyboard" on the
+  Settings homepage: landscape view, folio case mode, memory expansion (zram
+  writeback), pen settings, the physical keyboard page of the stock settings
+  with the keyboard firmware update, and the rows that open the game
+  performance and Experimental features apps (`custom/`) when they are
+  installed. Charging modes, bypass
+  charging, standby saver and battery maintenance are on Settings > Battery and
+  the white balance strength is on Settings > Display (both in the `Settings`
+  fork, enabled by `config_lenovo_battery_features` in
+  `overlay/SettingsResTarget`).
 - `input/` — `lenovo-input.jar`, loaded into system_server as a
   DeviceKeyHandler: Lenovo pen (attach, pairing, battery, writing haptics,
   buttons), keyboard keys, charging modes, double tap to wake and the folio
   case mode (the cover is the sensor HAL hall effect sensor, confirmed by the
   light sensor, as on stock), ported from the stock ZUI services (see
-  `input/NOTICE`).
+  `input/NOTICE`). The per-app game performance profiles are the optional
+  `custom/input` extension (`lenovo-input-custom.jar`).
 
 ## Verified boot
 
