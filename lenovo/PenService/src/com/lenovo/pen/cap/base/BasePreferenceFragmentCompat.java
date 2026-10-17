@@ -109,7 +109,11 @@ public class BasePreferenceFragmentCompat extends zui.appcompat.preference.Prefe
                 continue;
             }
             if (CardDecoration.isDescription(preference) && previous instanceof PreferenceGroup
-                    && !TextUtils.isEmpty(preference.getTitle())) {
+                    && !TextUtils.isEmpty(preference.getTitle())
+                    // A format template (the footer fills in its arguments when
+                    // bound) cannot become a summary: ListPreference.getSummary
+                    // runs String.format on it and throws on %2$s.
+                    && preference.getTitle().toString().indexOf('%') < 0) {
                 Preference last = lastVisible((PreferenceGroup) previous);
                 if (last != null && !(last instanceof PreferenceGroup)
                         && !CardDecoration.isDescription(last)
