@@ -62,6 +62,8 @@ binder_use(hal_lenovokeyboard_default)
 allow hal_lenovokeyboard_default lenovo_keyboard_device:chr_file rw_file_perms;
 allow hal_lenovokeyboard_default vendor_sysfs_lenovo_kb:dir r_dir_perms;
 allow hal_lenovokeyboard_default vendor_sysfs_lenovo_kb:file rw_file_perms;
+# Keyboard firmware update over USB HID (/dev/hidraw*)
+allow hal_lenovokeyboard_default vendor_hidraw_device:chr_file rw_file_perms;
 
 # Touchscreen (pen mode, pen BLE state, double tap gesture, haptics via ioctl)
 type hal_lenovotouchscreen_default, domain;
