@@ -72,9 +72,12 @@ PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*.kl,device/lenovo/lapis/configs/keylayout,$(TARGET_COPY_OUT_VENDOR)/usr/keylayout) \
     $(call find-copy-subdir-files,*.idc,device/lenovo/lapis/configs/idc,$(TARGET_COPY_OUT_VENDOR)/usr/idc)
 
-# Display configuration: raises the backlight for HDR content (HdrBrightnessModifier),
-# which Android only does with a config of the display
-PRODUCT_COPY_FILES +=     $(call find-copy-subdir-files,*.xml,device/lenovo/lapis/configs/displayconfig,$(TARGET_COPY_OUT_VENDOR)/etc/displayconfig)
+# Display configuration of the stock firmware: the panel has no display_id_<id>.xml (the
+# stock vendor one is for the Qualcomm reference panel), so the display service takes the
+# brightness arrays of config.xml and the high brightness mode data of display_hdr.xml
+# (stock DisplayDeviceConfig.zuiLoadHighBrightnessModeData)
+PRODUCT_COPY_FILES += \
+    device/lenovo/lapis/configs/displayconfig-system/display_hdr.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/displayconfig/display_hdr.xml
 
 # Fingerprint (Goodix)
 PRODUCT_COPY_FILES += \
