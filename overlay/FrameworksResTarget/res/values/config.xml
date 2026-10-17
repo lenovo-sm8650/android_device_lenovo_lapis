@@ -5,7 +5,9 @@
 -->
 <!-- Values from the stock LapisRowFrameworksOverlay (ZUI_17.5.10.362) unless noted.
      config_autoBrightnessDisplayValuesNits is raised: the stock curve gave
-     ~85 nits indoors without the ZUI framework boost. -->
+     ~85 nits indoors without the ZUI framework boost. Its dark end (0-40 lux)
+     matches the stock screen brightness there: our display config maps nits
+     to a lower brightness than the stock one. -->
 <resources>
     <!-- Brightness -->
     <bool name="config_automatic_brightness_available">true</bool>
@@ -28,10 +30,10 @@
     </integer-array>
 
     <array name="config_autoBrightnessDisplayValuesNits">
-        <item>10</item>
-        <item>20</item>
-        <item>50</item>
-        <item>100</item>
+        <item>30</item>
+        <item>30</item>
+        <item>70</item>
+        <item>110</item>
         <item>150</item>
         <item>180</item>
         <item>230</item>
