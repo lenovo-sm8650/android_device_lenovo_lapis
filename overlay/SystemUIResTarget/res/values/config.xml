@@ -19,4 +19,8 @@
          mode (lenovo-input ScreenshotHelper). AOSP enables it for desktop
          only. -->
     <bool name="config_enableLargeScreenScreencapture">true</bool>
+
+    <!-- Three flashlight strength positions (off, medium, maximum): the vendor camera HAL gives
+         the same low LED current for every strength level, so maximum is the full-current torch. -->
+    <bool name="config_flashlightStrengthTwoStep">true</bool>
 </resources>
