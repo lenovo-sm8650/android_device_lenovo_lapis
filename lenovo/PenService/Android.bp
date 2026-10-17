@@ -5,7 +5,8 @@
 // Stock Lenovo PenService (pen settings, buttons, writing haptics UI, EasyJot)
 // with a compat dex prepended for ZUI / Android 14 APIs absent in Android 17.
 // Handwriting settings link to Gboard; the duplicate Lenovo IME service is
-// removed from the manifest by lenovo_prepend_dex. The stock APK comes from the vendor tree
+// removed from the manifest by lenovo_prepend_dex, which also drops the language-pack
+// download service and activity. The stock APK comes from the vendor tree
 // (proprietary-files.txt: EXTRACT_ONLY, FILEGROUP PenService-stock), hence the
 // own namespace importing it (the vendor namespace already imports the
 // device one). Listed in PRODUCT_SOONG_NAMESPACES in device.mk.
@@ -50,7 +51,7 @@ java_genrule {
     cmd: "$(location d8) --release --no-desugaring --min-api 35 " +
         "--output $(genDir)/compat.zip $(location :PenServiceCompat) && " +
         "$(location lenovo_prepend_dex) --apk $(location :PenService-stock) " +
-        "--dex-zip $(genDir)/compat.zip --remove-pen-ime --out $(out)",
+        "--dex-zip $(genDir)/compat.zip --remove-pen-ime --remove-language-download --out $(out)",
 }
 
 prebuilt_etc {

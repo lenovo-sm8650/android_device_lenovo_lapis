@@ -7,9 +7,10 @@
 
 ART resolves a class from the first dex of the APK that defines it, so the
 compat classes shadow the stock ones with the same name. Everything else is
-copied unchanged, except the retired Lenovo IME service in the binary manifest
-when --remove-pen-ime is given (only the APK that carries the duplicate IME
-service needs that; the other callers keep their manifest intact).
+copied unchanged, except the retired components named by --remove-pen-ime (the
+duplicate Lenovo IME service) and --remove-language-download (the language-pack
+download service and activity) in the binary manifest; the other callers keep
+their manifest intact.
 The APK is re-signed and aligned by android_app_import.
 """
 import argparse
@@ -19,6 +20,8 @@ import zipfile
 
 
 PEN_IME_CLASS = "com.lenovo.pen.handwriting.service.HandwritingIme"
+LANGUAGE_DOWNLOAD_SERVICE = "com.lenovo.pen.bt.service.LanguageDownloadService"
+LANGUAGE_ACTIVITY = "com.lenovo.pen.bt.ui.freewrite.language.LanguageActivity"
 ANDROID_NS = "http://schemas.android.com/apk/res/android"
 
 
@@ -49,15 +52,19 @@ def _strings(chunk):
     return result
 
 
-def remove_pen_ime(manifest):
-    """Remove exactly the legacy IME service, retaining resources and other components."""
+def remove_components(manifest, removals):
+    """Remove exactly the named services/activities, retaining resources and other components.
+
+    removals maps a manifest tag ("service" or "activity") to the class names to strip;
+    each requested class must be present exactly once.
+    """
     xml_type, header_size, total = struct.unpack_from("<HHI", manifest)
     if xml_type != 3 or total != len(manifest):
         raise ValueError("Expected a complete binary Android manifest")
     chunks = []
     strings = None
     skip_depth = 0
-    removed = 0
+    matched = set()
     offset = header_size
     while offset < total:
         kind, node_header, size = struct.unpack_from("<HHI", manifest, offset)
@@ -78,7 +85,8 @@ def remove_pen_ime(manifest):
                 raise ValueError("Missing manifest string pool")
             _, name, attr_start, attr_size, attr_count = struct.unpack_from(
                     "<IIHHH", chunk, node_header)
-            if strings[name] == "service":
+            tag = strings[name]
+            if tag in removals:
                 for i in range(attr_count):
                     base = node_header + attr_start + i * attr_size
                     ns, key, raw = struct.unpack_from("<III", chunk, base)
@@ -87,15 +95,16 @@ def remove_pen_ime(manifest):
                             if chunk[base + 15] != 3:
                                 raise ValueError("Expected string service name")
                             raw = struct.unpack_from("<I", chunk, base + 16)[0]
-                        if strings[raw] == PEN_IME_CLASS:
+                        if strings[raw] in removals[tag]:
                             skip_depth = 1
-                            removed += 1
+                            matched.add((tag, strings[raw]))
                             break
                 if skip_depth:
                     continue
         chunks.append(chunk)
-    if removed != 1 or skip_depth:
-        raise ValueError(f"Expected exactly one complete Lenovo IME service, found {removed}")
+    expected = {(tag, cls) for tag, classes in removals.items() for cls in classes}
+    if matched != expected or skip_depth:
+        raise ValueError(f"Expected each removed component exactly once, found {sorted(matched)}")
     result = bytearray(manifest[:header_size] + b"".join(chunks))
     struct.pack_into("<I", result, 4, len(result))
     return bytes(result)
@@ -108,10 +117,19 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--remove-pen-ime", action="store_true",
                     help="strip the retired Lenovo handwriting IME service")
+    ap.add_argument("--remove-language-download", action="store_true",
+                    help="strip the language-pack download service and activity")
     args = ap.parse_args()
 
     with zipfile.ZipFile(args.dex_zip) as dz:
         compat = dz.read("classes.dex")
+
+    removals = {}
+    if args.remove_pen_ime:
+        removals["service"] = {PEN_IME_CLASS}
+    if args.remove_language_download:
+        removals["service"] = removals.get("service", set()) | {LANGUAGE_DOWNLOAD_SERVICE}
+        removals["activity"] = {LANGUAGE_ACTIVITY}
 
     dex_re = re.compile(r"^classes(\d*)\.dex$")
     with zipfile.ZipFile(args.apk) as src, \
@@ -122,8 +140,8 @@ def main():
             if info.filename.startswith("META-INF/"):
                 continue  # old signature
             data = src.read(info.filename)
-            if info.filename == "AndroidManifest.xml" and args.remove_pen_ime:
-                data = remove_pen_ime(data)
+            if info.filename == "AndroidManifest.xml" and removals:
+                data = remove_components(data, removals)
             m = dex_re.match(info.filename)
             name = info.filename
             if m:
