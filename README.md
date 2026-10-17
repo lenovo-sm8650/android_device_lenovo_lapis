@@ -40,7 +40,7 @@ Highlights of the PixelOS (`seventeen`) build:
 - **Lenovo keyboard** — touchpad controls, configurable shortcut keys, backlight, firmware updates and desktop mode integration.
 - **Folio case** — close the cover to sleep and lock; open it to wake.
 - **Adaptive refresh rate** — 30/60/90/120/144 Hz display modes with adaptive switching.
-- **Battery controls** (Settings > Battery) — charge optimization (charging limits, battery protection, battery maintenance), bypass charging and standby power saving.
+- **Battery controls** (Settings > Battery) — a Charging category (normal, stop at 80%, battery protection, bypass charging) and a Battery category (enhanced standby saver, battery maintenance, battery status).
 - **Natural colors** (Settings > Display) — ambient white balance with adjustable strength.
 - **Memory expansion** (Advanced features > Performance) — storage-backed virtual memory with a selectable size.
 - **Game performance** (Advanced features > Performance, customizations build only) — separate Power saving, Balanced, Default and custom CPU/GPU limits for each app, with optional background memory cleanup for games. Profiles apply while the app is on screen and return to normal when you leave it.
@@ -54,7 +54,7 @@ HDR and Dolby playback depends on the app, content and streaming subscription.
 Available in Settings > Advanced features > Experimental features (customizations build only):
 
 - **App compatibility** — choose the brand, manufacturer and model reported to selected apps, and make selected apps recognize Google Play as their installer.
-- **Play Integrity Fix** — the [PlayIntegrityFix fork](https://github.com/wnduddld0513/PlayIntegrityFix/tree/seventeen) (GPL-3.0) built into the ROM, without root; on by default, the device profile is fetched on first boot.
+- **Play Integrity Fix** — the [PlayIntegrityFix fork](https://github.com/wnduddld0513/PlayIntegrityFix/tree/seventeen) (GPL-3.0) built into the ROM, without root; on by default with a built-in Pixel 9 (tokay) profile that can be updated from GitHub. The row is shown only when the app is installed.
 
 ## Working
 
