@@ -30,6 +30,6 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
     SystemDevice=TB520FU \
     SystemName=TB520FU
 
-# Inherit after the stock properties so the optional Pixel fingerprint wins.
-# TARGET_ENABLE_FP_OVERRIDE=false retains the stock fingerprint above.
+# Keep the stock ZUI fingerprint set above; Play Integrity Fix spoofs a Pixel
+# profile per process instead of overriding the global build fingerprint.
 $(call inherit-product-if-exists, hardware/lenovo/custom/custom.mk)
