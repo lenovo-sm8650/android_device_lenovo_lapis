@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Display configuration of the built-in panel of the Lenovo Yoga Tab Plus.
+     Like the stock firmware and other LCD tablets (Pixel Tablet), there is no HDR
+     brightness boost: the backlight lights the whole panel, so raising it for HDR
+     highlights would also raise the black of the video, and HDR content is tone
+     mapped within the SDR brightness. -->
+<displayConfiguration>
+    <name>Lenovo TB520FU LCD</name>
+
+    <!-- The brightness curve of config.xml: 650 nits, the typical brightness of the
+         specifications of the panel, at the top. -->
+    <screenBrightnessMap>
+        <point><value>0.000977</value><nits>7.91434</nits></point>
+        <point><value>0.011811024</value><nits>8.0</nits></point>
+        <point><value>0.04330709</value><nits>30.0</nits></point>
+        <point><value>0.10236221</value><nits>70.0</nits></point>
+        <point><value>0.1496063</value><nits>100.0</nits></point>
+        <point><value>0.18110237</value><nits>120.0</nits></point>
+        <point><value>0.22834645</value><nits>150.0</nits></point>
+        <point><value>0.27559054</value><nits>180.0</nits></point>
+        <point><value>0.31889763</value><nits>210.0</nits></point>
+        <point><value>0.41338584</value><nits>270.0</nits></point>
+        <point><value>0.51968503</value><nits>340.0</nits></point>
+        <point><value>0.6456693</value><nits>420.0</nits></point>
+        <point><value>0.7362205</value><nits>480.0</nits></point>
+        <point><value>0.8464567</value><nits>550.0</nits></point>
+        <point><value>1.0</value><nits>650.0</nits></point>
+    </screenBrightnessMap>
+    <screenBrightnessDefault>0.2862</screenBrightnessDefault>
+</displayConfiguration>

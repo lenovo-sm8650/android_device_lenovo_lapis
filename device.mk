@@ -151,3 +151,7 @@ $(call inherit-product, device/lenovo/sm8650-common/common.mk)
 
 # Inherit from the proprietary files makefile.
 $(call inherit-product, vendor/lenovo/lapis/lapis-vendor.mk)
+
+# Display configuration of the panel
+PRODUCT_COPY_FILES += \
+    $(call find-copy-subdir-files,*.xml,device/lenovo/lapis/configs/displayconfig,$(TARGET_COPY_OUT_VENDOR)/etc/displayconfig)
