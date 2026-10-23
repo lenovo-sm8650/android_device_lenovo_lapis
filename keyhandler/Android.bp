@@ -1,0 +1,13 @@
+//
+// Copyright (C) 2026 The LineageOS Project
+//
+// SPDX-License-Identifier: Apache-2.0
+//
+
+java_library {
+    name: "lapis-keyhandler",
+    srcs: ["src/**/*.java"],
+    platform_apis: true,
+    system_ext_specific: true,
+    installable: true,
+}

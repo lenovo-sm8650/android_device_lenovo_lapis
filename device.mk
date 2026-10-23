@@ -44,6 +44,10 @@ PRODUCT_SYSTEM_EXT_PROPERTIES += \
 PRODUCT_PACKAGES += \
     DolbyVisionService
 
+# Folio cover (hall effect sensor): sleep when closed, wake when opened
+PRODUCT_PACKAGES += \
+    lapis-keyhandler
+
 # Stock Lenovo keyboard keylayouts and input device configurations
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*.kl,device/lenovo/lapis/configs/keylayout,$(TARGET_COPY_OUT_VENDOR)/usr/keylayout) \
@@ -90,6 +94,9 @@ PRODUCT_COPY_FILES += \
     device/lenovo/lapis-kernel/modules/vendor_dlkm/system_dlkm.modules.blocklist:$(TARGET_COPY_OUT_VENDOR_DLKM)/lib/modules/system_dlkm.modules.blocklist
 
 # Overlays
+DEVICE_PACKAGE_OVERLAYS += \
+    $(LOCAL_PATH)/overlay-lineage
+
 PRODUCT_ENFORCE_RRO_TARGETS := *
 PRODUCT_PACKAGES += \
     FrameworksResTarget \
