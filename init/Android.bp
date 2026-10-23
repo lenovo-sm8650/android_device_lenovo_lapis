@@ -81,3 +81,10 @@ prebuilt_etc {
     src: "fstab.zram.16",
     vendor: true,
 }
+
+prebuilt_etc {
+    name: "ueventd.lapis.rc",
+    filename: "ueventd.rc",
+    src: "ueventd.lapis.rc",
+    device_specific: true,
+}

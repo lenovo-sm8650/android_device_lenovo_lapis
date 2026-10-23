@@ -1,0 +1,2 @@
+# Lineage Health HAL (vendor.lineage.health-service.default, runs as system)
+/sys/class/power_supply/battery charging_enable 0660 system system

@@ -1,0 +1,4 @@
+# Charging control: power_supply/battery/charging_enable (labeled by the QTI
+# genfs_contexts of the SoC, ueventd.lapis.rc makes it writable for system)
+allow hal_lineage_health_default vendor_sysfs_battery_supply:dir r_dir_perms;
+allow hal_lineage_health_default vendor_sysfs_battery_supply:file rw_file_perms;

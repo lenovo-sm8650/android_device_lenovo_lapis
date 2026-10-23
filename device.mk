@@ -58,6 +58,16 @@ PRODUCT_PACKAGES += \
     android.hardware.health-service.lenovo \
     android.hardware.health-service.lenovo_recovery
 
+# Lineage Health: charging control through charging_enable (1 = charge,
+# 0 = stop charging; the charger keeps powering the device, i.e. bypass)
+PRODUCT_PACKAGES += \
+    vendor.lineage.health-service.default
+
+$(call soong_config_set,lineage_health,charging_control_charging_path,/sys/class/power_supply/battery/charging_enable)
+$(call soong_config_set,lineage_health,charging_control_charging_enabled,1)
+$(call soong_config_set,lineage_health,charging_control_charging_disabled,0)
+$(call soong_config_set_bool,lineage_health,charging_control_supports_bypass,true)
+
 # Init
 PRODUCT_PACKAGES += \
     fstab.zram.0 \
@@ -72,7 +82,8 @@ PRODUCT_PACKAGES += \
     setwlansardsi1.sh \
     setwlansardsi2.sh \
     setwlansardsi3.sh \
-    setwlansardsi4.sh
+    setwlansardsi4.sh \
+    ueventd.lapis.rc
 
 # Kernel
 PRODUCT_COPY_FILES += \
