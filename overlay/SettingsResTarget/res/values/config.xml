@@ -4,15 +4,6 @@
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources>
-    <!-- Lenovo battery controls on Settings > Battery (charging mode, battery
-         maintenance, standby saver, bypass charging), applied by lenovo-input. -->
-    <bool name="config_lenovo_battery_features">true</bool>
-
-    <!-- Regulatory labels: the stock e-label of TB520FU (system/etc/deviceinfo/e_label_wifi*.png),
-         shown like the stock ZUI Settings. -->
+    <!-- Regulatory labels: the stock e-label of TB520FU (system/etc/deviceinfo/e_label_wifi*.png) -->
     <bool name="config_show_regulatory_info">true</bool>
-
-    <!-- "Charge to full" of the battery defender tip lifts the Lenovo charge
-         limits until the charger is unplugged (lenovo-input BatteryController). -->
-    <string name="config_battery_defender_resume_charge_action" translatable="false">lenovo.intent.action.RESUME_CHARGING</string>
 </resources>

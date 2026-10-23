@@ -47,9 +47,4 @@
     <integer name="config_wifiHardwareSoftapMaxClientCount">32</integer>
     <integer name="config_wifiMaxNumWifiConfigurations">1000</integer>
 
-    <!-- Wi-Fi only, no telephony country: take the country the access points
-         around agree on, as the Pixel Tablet does (WifiCountryCode); the
-         default comes from the region of the system language
-         (hardware/lenovo/input WifiCountryFromLocale). -->
-    <bool name="config_wifiUpdateCountryCodeFromScanResultGeneric">true</bool>
 </resources>

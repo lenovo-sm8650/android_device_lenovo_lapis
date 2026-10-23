@@ -81,16 +81,3 @@ prebuilt_etc {
     src: "fstab.zram.16",
     vendor: true,
 }
-
-sh_binary {
-    name: "init.lenovo.region.sh",
-    src: "init.lenovo.region.sh",
-    vendor: true,
-}
-
-prebuilt_etc {
-    name: "init.lenovo.region.rc",
-    src: "init.lenovo.region.rc",
-    sub_dir: "init",
-    vendor: true,
-}

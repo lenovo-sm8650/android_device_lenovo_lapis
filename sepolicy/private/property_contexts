@@ -1,7 +1,0 @@
-# SettingsLib BrightnessUtils reads it in SystemUI (brightness slider) and
-# Settings; the platform label (system_prop, via "sys.") is not readable by
-# platform_app, so it would silently stay false there. See system_ext.prop.
-sys.brightness.disable_gamma_conversion u:object_r:exported3_system_prop:s0 exact bool
-
-# Video motion smoothing (VideoMotion)
-sys.lenovo.memc.    u:object_r:lenovo_memc_prop:s0 prefix bool

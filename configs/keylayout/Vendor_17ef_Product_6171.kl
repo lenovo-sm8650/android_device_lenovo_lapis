@@ -1,5 +1,5 @@
-# Converted from the stock ZUI keylayout by
-# tools/bringup/convert_keylayouts.py; ZUI-only keycodes remapped.
+# Converted from the stock keylayout by
+# tools/bringup/convert_keylayouts.py; vendor-only keycodes remapped.
 # Copyright (C) 2010 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -135,7 +135,7 @@ key 110   INSERT
 key 111   FORWARD_DEL
 # key 112 "KEY_MACRO"
 # Lenovo custom key
-key 113   VOLUME_MUTE  # ZUI LENOVO_VOLUME_MUTE
+key 113   VOLUME_MUTE  # LENOVO_VOLUME_MUTE
 key 114   VOLUME_DOWN
 key 115   VOLUME_UP
 key 116   POWER
@@ -423,19 +423,19 @@ key usage 0x0c019C PROFILE_SWITCH
 key usage 0x0c01A2 ALL_APPS
 
 # Lenovo P14 custom key
-key usage 0x0c038e LOCK  # ZUI SCREEN_LOCK
+key usage 0x0c038e LOCK  # SCREEN_LOCK
 key usage 0x0c0390 META_LEFT
 key usage 0x0c0391 MUTE
-key usage 0x0c0392 F24  # ZUI TP_MUTE
-key usage 0x0c0393 SEARCH  # ZUI GLOBAL_SEARCH
-key usage 0x0c0394 FULLSCREEN  # ZUI FULL_SCREEN
-key usage 0x0c0395 RECENT_APPS  # ZUI SPLIT_SCREEN
+key usage 0x0c0392 F24  # TP_MUTE
+key usage 0x0c0393 SEARCH  # GLOBAL_SEARCH
+key usage 0x0c0394 FULLSCREEN  # FULL_SCREEN
+key usage 0x0c0395 RECENT_APPS  # SPLIT_SCREEN
 # key usage 0x0c0397 SUPER_CONNECT  (no AOSP equivalent)
-key usage 0x0c0398 MACRO_1  # ZUI APP1
-key usage 0x0c0399 MACRO_2  # ZUI APP2
-key usage 0x0c039a MACRO_3  # ZUI FN_LOCK
-key usage 0x0c039b SETTINGS  # ZUI ZUI_SETTING
-key usage 0x0c0079 KEYBOARD_BACKLIGHT_TOGGLE  # ZUI BACK_LIGHT
+key usage 0x0c0398 MACRO_1  # APP1
+key usage 0x0c0399 MACRO_2  # APP2
+key usage 0x0c039a MACRO_3  # FN_LOCK
+key usage 0x0c039b SETTINGS  # SETTING
+key usage 0x0c0079 KEYBOARD_BACKLIGHT_TOGGLE  # BACK_LIGHT
 
 
 # Joystick and game controller axes.

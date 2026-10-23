@@ -3,19 +3,10 @@
      SPDX-FileCopyrightText: The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
-<!-- Values from the stock LapisRowFrameworksOverlay (ZUI_17.5.10.362) unless noted.
-     The stock brightness logic of the ZUI framework (config_zuiAutoBrightness) is in
-     frameworks/base, display service. -->
+<!-- Values from the stock LapisRowFrameworksOverlay unless noted -->
 <resources>
     <!-- Brightness -->
     <bool name="config_automatic_brightness_available">true</bool>
-    <bool name="config_zuiAutoBrightness">true</bool>
-
-    <!-- Lux of the two steps of the high brightness mode of the panel -->
-    <integer-array name="config_zui_defaultBrightnessThreshold">
-        <item>5000</item>
-        <item>10000</item>
-    </integer-array>
 
     <integer-array name="config_autoBrightnessLevels">
         <item>5</item>
@@ -126,36 +117,28 @@
     <integer name="config_nightDisplayColorTemperatureMax">6000</integer>
     <integer name="config_nightDisplayColorTemperatureMin">4000</integer>
 
-    <!-- Light theme by default (vendor/lineage sets dark, 2) -->
-    <integer name="config_defaultNightMode">1</integer>
-
-    <!-- Screen off/on animation -->
-    <integer name="config_colorFadeOffDurations">30</integer>
-    <integer name="config_colorFadeOnDurations">250</integer>
-
     <!-- Audio -->
     <integer name="config_safe_media_volume_index">11</integer>
     <integer name="config_safe_media_volume_usb_mB">-1900</integer>
 
-    <!-- Refresh rate: adaptive up to 120 Hz by default like ZUI; 144 Hz is
-         meant to be used only as a fixed rate (Settings: 144 + VRR off). -->
-    <integer name="config_defaultRefreshRate">0</integer>
+    <!-- Refresh rate: 120 Hz default and peak.
+         The panel switches the stylus scanning of its touch controller off at 90 and
+         144 Hz, so the display must only use 120 Hz. The framework has no list of
+         allowed modes; the closest device-side switch is the low brightness zone of
+         the display mode director: with a threshold that covers every brightness
+         and no ambient limit (-1), the display is always inside the zone and votes
+         for exactly config_defaultRefreshRateInZone (physical range 120-120 Hz,
+         refresh rate switching disabled) while the peak refresh rate setting allows
+         more than 60 Hz. Settings > Display > Smooth display off leaves 60 Hz. -->
+    <integer name="config_defaultRefreshRate">120</integer>
     <integer name="config_defaultPeakRefreshRate">120</integer>
-
-    <!-- Battery Saver keeps the selected refresh rate unless the user enables its limit. -->
-    <bool name="config_lowPowerRefreshRateDefault">false</bool>
-
-    <!-- The panel turns the stylus scanning of its touch controller off at 90 and 144 Hz
-         (dsi_panel_match_fps_setting of the Lenovo display driver). The touch controller still
-         reports a stylus nearby with KEY_SKIN_STYLUS (249) on the touchscreen, so the display
-         leaves those rates until 10 s after the last one, like the stock SurfaceFlinger
-         (ro.surface_flinger.set_pen_timer_ms=10000). -->
-    <integer name="config_stylusDetectScanCode">249</integer>
-    <integer-array name="config_stylusIncompatibleRefreshRates">
-        <item>90</item>
-        <item>144</item>
+    <integer name="config_defaultRefreshRateInZone">120</integer>
+    <integer-array name="config_brightnessThresholdsOfPeakRefreshRate">
+        <item>255</item>
     </integer-array>
-    <integer name="config_stylusRefreshRateTimeoutMs">10000</integer>
+    <integer-array name="config_ambientThresholdsOfPeakRefreshRate">
+        <item>-1</item>
+    </integer-array>
 
     <!-- Memory extension: let StorageManagerService schedule the zram
          writeback job (the backing file comes from fstab.zram.N) -->
@@ -163,8 +146,6 @@
 
     <!-- From the stock vendor FrameworksResTarget_Vendor overlay -->
     <bool name="config_powerDecoupleAutoSuspendModeFromDisplay">true</bool>
-    <!-- Without this WindowManager reports no navigation bar, so SystemUI
-         never creates the taskbar and the back gesture handler. -->
     <bool name="config_showNavigationBar">true</bool>
     <bool name="config_useDevInputEventForAudioJack">true</bool>
 
@@ -178,17 +159,12 @@
         <item>3</item>
     </integer-array>
 
-    <!-- Adaptive white balance ("True Tone"): the tcs3408 RGB sensor reports the
+    <!-- Display white balance ("Natural colors"): the tcs3408 RGB sensor reports the
          ambient color temperature in Kelvin as values[0] of qti.sensor.rgb.
-         Switch and strength slider: Lenovo features (LenovoParts); the Settings
-         switch is hidden (SettingsResTarget).
-         The mapping follows the stock ZUI one (AutoColorTempUtil.convertAmbient2Screen):
-         ambient <3000K -> 5800K, 3000-4000 -> 6100, 4000-5000 -> 6500 (neutral),
+         Ambient <3000K -> 5800K, 3000-4000 -> 6100, 4000-5000 -> 6500 (neutral),
          5000-6000 -> 7100, 6000-7000 -> 7800, 7000-8000 -> 8500, >8000 -> 9500;
-         below 50 lux neutral, above 1000 lux 7500K. Without a mapping AOSP shows the
-         ambient CCT itself, which made indoor light very yellow. -->
+         below 50 lux neutral, above 1000 lux 7500K. -->
     <bool name="config_displayWhiteBalanceAvailable">true</bool>
-    <!-- On by default (after a factory reset), like the stock natural color -->
     <bool name="config_displayWhiteBalanceEnabledDefault">true</bool>
     <string name="config_displayWhiteBalanceColorTemperatureSensorName" translatable="false">qti.sensor.rgb</string>
     <integer name="config_displayWhiteBalanceColorTemperatureMin">5800</integer>
@@ -211,10 +187,9 @@
         <item>8500.0</item>
         <item>9500.0</item>
     </array>
-    <!-- The low and high light values below are display CCTs: this AOSP maps
-         the ambient CCT to the display CCT first and then blends these in
-         (DisplayWhiteBalanceController.updateAmbientColorTemperature).
-         Low light: neutral 6500K below 40 lux, like stock (below 50 lux). -->
+    <!-- The low and high light values below are display CCTs: the ambient CCT
+         is mapped to the display CCT first and then blended with these
+         (DisplayWhiteBalanceController.updateAmbientColorTemperature). -->
     <array name="config_displayWhiteBalanceLowLightAmbientBrightnesses">
         <item>40.0</item>
         <item>50.0</item>
@@ -224,7 +199,6 @@
         <item>1.0</item>
     </array>
     <item name="config_displayWhiteBalanceLowLightAmbientColorTemperature" format="float" type="dimen">6500.0</item>
-    <!-- Bright daylight: 7500K above 1000 lux, like stock -->
     <array name="config_displayWhiteBalanceHighLightAmbientBrightnesses">
         <item>900.0</item>
         <item>1000.0</item>
@@ -235,115 +209,6 @@
     </array>
     <item name="config_displayWhiteBalanceHighLightAmbientColorTemperature" format="float" type="dimen">7500.0</item>
 
-    <!-- Double tap to wake: Settings > Display > Tap to wake, applied to the
-         touch panel by hardware/lenovo/input ZuiDoubleWakeUpScreenInputPolicy.java -->
-    <bool name="config_supportDoubleTapWake">true</bool>
-
-    <!-- Lenovo pen / keyboard / battery bridge (hardware/lenovo/input), loaded into
-         system_server by PhoneWindowManager -->
-    <string-array name="config_deviceKeyHandlerLibs" translatable="false">
-        <item>/system_ext/framework/lenovo-input.jar</item>
-    </string-array>
-    <string-array name="config_deviceKeyHandlerClasses" translatable="false">
-        <item>com.zui.server.input.KeyHandler</item>
-    </string-array>
-
-    <!-- Apps offered for Lenovo pen writing haptics, stock list (ZUI_17.5.10.362).
-         Needs patches/frameworks_base-0001 (defines the array). -->
-    <string-array name="config_stylus_pen_haptic_packages" translatable="false">
-        <item>net.huanci.hsjpro</item>
-        <item>kr.neolab.neonote</item>
-        <item>jp.co.celsys.clipstudiopaint.googleplay</item>
-        <item>easynotes.notes.note.notepad.notebook.privatenotes.note</item>
-        <item>com.ZWSoft.ZWCAD</item>
-        <item>com.zui.notes</item>
-        <item>com.youdao.note</item>
-        <item>com.xodo.pdf.reader</item>
-        <item>com.wacom.signpropdf</item>
-        <item>com.wacom.bamboopapertab</item>
-        <item>com.vson.edraw</item>
-        <item>com.vistrav.whiteboard</item>
-        <item>com.ttluoshi.drawapp</item>
-        <item>com.tophatch.concepts.china</item>
-        <item>com.tophatch.concepts</item>
-        <item>com.steadfastinnovation.android.projectpapyrus</item>
-        <item>com.sonymobile.sketch</item>
-        <item>com.newskyer.draw</item>
-        <item>com.myscript.nebo</item>
-        <item>com.myscript.calculator</item>
-        <item>com.mubu.app</item>
-        <item>com.microsoft.office.onenote</item>
-        <item>com.medibang.android.paint.tablet</item>
-        <item>com.medibang.android.jumppaint</item>
-        <item>com.liubowang.drawingboard</item>
-        <item>com.kdanmobile.android.pdfreader.google.pad</item>
-        <item>com.jideos.jnotes</item>
-        <item>com.infraware.office.link</item>
-        <item>com.hlg.daydaytobusiness</item>
-        <item>com.google.android.keep</item>
-        <item>com.goodnotepad.smarttodolistnote</item>
-        <item>com.foxit.mobile.pdf.lite</item>
-        <item>com.flexcil.flexcilnote</item>
-        <item>com.eyewind.paperone</item>
-        <item>com.yinxiang</item>
-        <item>com.evernote</item>
-        <item>com.dencreak.esmemo</item>
-        <item>com.color365.sketch</item>
-        <item>com.brakefield.painter</item>
-        <item>com.brakefield.idfree</item>
-        <item>com.axis.drawingdesk.v3</item>
-        <item>com.adsk.sketchbook</item>
-        <item>com.pick.sketchbook</item>
-        <item>cn.canva.editor</item>
-        <item>jp.ne.ibis.ibispaintx.app</item>
-        <item>com.tayasui.sketches</item>
-        <item>jp.ne.ibis.ibispaint.app</item>
-        <item>com.picsart.draw</item>
-        <item>com.bytestorm.artflow</item>
-        <item>com.topstack.kilonotes.pad</item>
-        <item>com.delgeo.desygner</item>
-        <item>com.orion.notein</item>
-        <item>com.adobe.reader</item>
-        <item>com.officetoolsapps.document.reader.editor</item>
-        <item>com.adobe.fas</item>
-        <item>com.penly.planner.notes.tasks.reminders</item>
-        <item>com.fluidtouch.noteshelf2</item>
-        <item>com.viettran.INKrediblePro</item>
-        <item>com.acadoid.lecturenotes</item>
-        <item>com.zoho.notebook</item>
-        <item>note.notepad.todo.notebook</item>
-        <item>io.notewise.app</item>
-        <item>com.yocto.wenote</item>
-        <item>com.kreoSoft.Notepad</item>
-        <item>com.cga.my.color.note.notepad</item>
-        <item>note.notepad.diary.notebook</item>
-        <item>com.litewhite.notemaster.free</item>
-        <item>org.mightyfrog.android.simplenotepad</item>
-        <item>evansir.securenotepad</item>
-        <item>com.eyewind.paperonefree</item>
-        <item>org.gimp.GIMP</item>
-        <item>org.hermit.simpledrawpro</item>
-        <item>drawsketch.com.sketchpad.drawing.painting</item>
-        <item>org.n0n3m4.nomad</item>
-        <item>drawingapps.drawingsketchpad.paintingtools</item>
-        <item>com.royole.rydrawing</item>
-        <item>com.fiistudio.fiinote</item>
-        <item>com.nineton.shouzhang</item>
-        <item>com.chenupt.text</item>
-        <item>com.luyun.lightnote</item>
-        <item>com.videocutting.editor</item>
-        <item>com.sygd.gdpaintfive</item>
-        <item>jp.ne.ibis.ibispaintx.app.hms</item>
-        <item>net.huanci.hsj</item>
-        <item>com.moonlight.huatu</item>
-        <item>com.wyart.setfourpaper</item>
-        <item>com.zq.hand_drawn</item>
-        <item>com.littlez.draw</item>
-        <item>com.zh.drawworld</item>
-        <item>com.lloo.w.painting</item>
-        <item>com.painting.draw</item>
-        <item>com.google.android.apps.docs</item>
-    </string-array>
     <!-- WiFi Display (Miracast) through the QTI session (WfdCommon) -->
     <bool name="config_enableWifiDisplay">true</bool>
 </resources>

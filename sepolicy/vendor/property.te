@@ -1,17 +1,8 @@
 # persist.vendor.sys.fp.* (Goodix fingerprint HAL)
 vendor_internal_prop(vendor_fp_prop)
 
-# ro.vendor.config.lgsi.* (vendor.prop): Lenovo device/pen identity read by
-# PenService, ZuiUDevice and other Lenovo apps
+# ro.vendor.config.lgsi.* (vendor.prop): Lenovo device identity
 vendor_public_prop(vendor_lenovo_config_prop)
-
-# ro.vendor.lenovo.dtb_region: package variant (PRC / ROW), read by the updater
-vendor_public_prop(vendor_lenovo_region_prop)
-
-# vendor.lenovo.charge_hold: a Lenovo charge limit holds charging. Set by
-# lenovo-input in the system server, read by the health HAL to report
-# LONG_LIFE. Public, as a system_ext type would need a compat mapping entry.
-vendor_public_prop(vendor_lenovo_charge_hold_prop)
 
 # Dolby Vision
 vendor_internal_prop(vendor_dolbyv_prop)

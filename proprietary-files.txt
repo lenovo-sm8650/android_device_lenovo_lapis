@@ -1,5 +1,5 @@
 ## All proprietary files from this list are from the stock
-## TB520FU_ROW_OPEN_USER_Q29300.0_A17_ZUI_18.5.10.037_ST_260929 firmware
+## TB520FU_ROW_OPEN_USER_Q29300.0_A17_18.5.10.037_ST_260929 firmware
 ## of the Lenovo Yoga Tab Plus (lapis).
 
 # Sensors config
@@ -956,9 +956,9 @@ vendor/etc/sensors/config/lanai_lsm6dso_lapis.json
 vendor/etc/sensors/config/lanai_tcs3408_0.json
 
 # Thermal engine policy (Lenovo; identical in the PRC firmware
-# TB520FU_CN_OPEN_USER_Q00002.0_W_ZUI_17.5.10.186_ST_260408). thermal-engine
+# TB520FU_CN_OPEN_USER_Q00002.0_W_17.5.10.186_ST_260408). thermal-engine
 # reads thermal-engine_<set>.conf for the use case in thermal_user_case.conf;
-# without a ZUI client it stays on case 0.
+# without a vendor client it stays on case 0.
 vendor/etc/thermal-engine_battery_0.conf
 vendor/etc/thermal-engine_battery_1.conf
 vendor/etc/thermal-engine_battery_2.conf
@@ -983,8 +983,6 @@ vendor/etc/dolby/dax-default.xml
 vendor/lib64/soundfx/libdlbvol.so
 vendor/lib64/soundfx/libswdap.so
 vendor/lib64/soundfx/libswgamedap.so
-system_ext/etc/permissions/com.dolby.daxservice.xml
-system_ext/priv-app/daxService/daxService.apk
 
 # Dolby Vision (decoder Codec2 store "default8", DVS display daemon and its
 # brightness service app)
@@ -1005,7 +1003,7 @@ vendor/lib64/libdolbyeglcore.so
 vendor/lib64/libdolbyottcameracontrol.so
 vendor/lib64/libdolbyproxyandroid.so
 vendor/lib64/libdolbyui.so
-system/app/DolbyVisionService/DolbyVisionService.apk:system_ext/app/DolbyVisionService/DolbyVisionService.apk;EXTRACT_ONLY;FILEGROUP=DolbyVisionService-stock
+system/app/DolbyVisionService/DolbyVisionService.apk:system_ext/app/DolbyVisionService/DolbyVisionService.apk
 
 # Codec2 libraries the Dolby Vision blobs above were built against (stock
 # vendor and VNDK v34). The ones built from source differ in their C++ class
@@ -1052,24 +1050,6 @@ vendor/etc/vintf/manifest/vendor.lenovo.hardware.keyboard.xml
 vendor/bin/hw/vendor.lenovo.hardware.display-service
 vendor/etc/init/vendor.lenovo.hardware.display-service.rc
 vendor/etc/vintf/manifest/vendor.lenovo.hardware.display-service.xml
-
-# Lenovo pen and accessory apps
-system/priv-app/PenService/PenService.apk:system_ext/priv-app/PenService/PenService.apk;EXTRACT_ONLY;FILEGROUP=PenService-stock
-system/priv-app/ZuiUDevice/ZuiUDevice.apk:system_ext/priv-app/ZuiUDevice/ZuiUDevice.apk
-system/etc/permissions/privapp-permissions-com.zui.udevice.xml:system_ext/etc/permissions/privapp-permissions-com.zui.udevice.xml
-system/etc/sysconfig/hiddenapi-whitelist-com.zui.udevice.xml:system_ext/etc/sysconfig/hiddenapi-whitelist-com.zui.udevice.xml
-system/etc/default-permissions/default-permissions-com.zui.udevice.xml:system_ext/etc/default-permissions/default-permissions-com.zui.udevice.xml
-
-# Lenovo pen config (PenService reads the fixed path /system/etc/pen/pen_config.xml:
-# pen market names, default settings and features such as palm rejection) and
-# its initial package state. The pen firmware updates (etc/pen/dfu) are left
-# out: every dfu entry of the stock pen_config.xml is commented out.
-system/etc/pen/pen_config.xml
-system/etc/sysconfig/initial-stopped-states-com.lenovo.penservice.xml:system_ext/etc/sysconfig/initial-stopped-states-com.lenovo.penservice.xml
-
-# Lenovo keyboard firmware update (pogo keyboards; Olympia = Bluetooth keyboard 17ef:619e)
-system/app/ZuiKeyboardUpdate/ZuiKeyboardUpdate.apk:system_ext/app/ZuiKeyboardUpdate/ZuiKeyboardUpdate.apk;EXTRACT_ONLY;FILEGROUP=ZuiKeyboardUpdate-stock
-system/app/ZuiKeyboardUpdateOlympia/ZuiKeyboardUpdateOlympia.apk:system_ext/app/ZuiKeyboardUpdateOlympia/ZuiKeyboardUpdateOlympia.apk;EXTRACT_ONLY;FILEGROUP=ZuiKeyboardUpdateOlympia-stock
 
 # Dependencies (auto)
 vendor/lib64/libBSTDSLR.so

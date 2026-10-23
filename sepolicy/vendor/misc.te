@@ -32,15 +32,10 @@ allow vendor_init vendor_persist_wlan_file:dir { relabelto setattr r_dir_perms }
 allow vendor_init vendor_persist_wlan_file:file { relabelto setattr r_file_perms };
 r_dir_file(kernel, vendor_persist_wlan_file)
 
-# ro.vendor.config.lgsi.* (vendor.prop): set by vendor_init, read by PenService
-# (system_app) and ZuiUDevice (platform app)
+# ro.vendor.config.lgsi.* (vendor.prop): set by vendor_init
 set_prop(vendor_init, vendor_lenovo_config_prop)
-get_prop(system_app, vendor_lenovo_config_prop)
-get_prop({ platform_app platform_app_36 }, vendor_lenovo_config_prop)
 
-# Pen charger (power_supply/wls_tx): lenovo-input reads attach state and MAC,
-# the battery HAL sends Qi commands
-allow system_server vendor_sysfs_wls_tx:file r_file_perms;
+# Pen charger (power_supply/wls_tx): the battery HAL sends Qi commands
 allow hal_lenovobattery_default vendor_sysfs_wls_tx:dir r_dir_perms;
 allow hal_lenovobattery_default vendor_sysfs_wls_tx:file rw_file_perms;
 

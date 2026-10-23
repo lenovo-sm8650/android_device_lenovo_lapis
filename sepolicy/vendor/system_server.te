@@ -1,5 +1,0 @@
-# lenovo-input BatteryController: a Lenovo charge limit holds charging.
-# The system server is a coredomain; the neverallow on coredomain setting
-# vendor properties exempts the violators attribute.
-typeattribute system_server system_writes_vendor_properties_violators;
-set_prop(system_server, vendor_lenovo_charge_hold_prop)

@@ -5,9 +5,8 @@
 
 /*
  * TB520FU copy of vendor/qcom/opensource/healthd-ext/aidl/main.cpp.
- * Changes: wls_tx is ignored (see qti_healthd_board_init), charging held by
- * the Lenovo charge limits is reported as LONG_LIFE (see LenovoHealth) and an
- * unused variable that breaks -Werror is dropped.
+ * Changes: wls_tx is ignored (see qti_healthd_board_init) and an unused
+ * variable that breaks -Werror is dropped.
  */
 
 #define LOG_TAG "android.hardware.health-service.lenovo"
@@ -38,37 +37,8 @@ static const enum soc_id target_no_psy[] = {
         MSM_SERAPHP,
 };
 
-using aidl::android::hardware::health::BatteryChargingState;
-using aidl::android::hardware::health::BatteryHealth;
-using aidl::android::hardware::health::BatteryStatus;
 using aidl::android::hardware::health::HalHealthLoop;
 using aidl::android::hardware::health::Health;
-using aidl::android::hardware::health::HealthInfo;
-
-/*
- * The charger only stops with a healthy battery and a charger plugged in when
- * charging is held on purpose: the 80 % limit, the 40-60 % protection mode or
- * bypass charging (lenovo-input BatteryController). Report that as LONG_LIFE
- * so SystemUI shows the "charging on hold" (defend) state like a Pixel with
- * charging optimization, instead of the charging bolt. BatteryController sets
- * vendor.lenovo.charge_hold while one of them holds charging; any other stop
- * (thermal mitigation, a weak charger) stays NOT_CHARGING, as nothing in
- * Settings can lift it.
- */
-class LenovoHealth : public Health {
-  public:
-    using Health::Health;
-
-  protected:
-    void UpdateHealthInfo(HealthInfo* info) override {
-        bool plugged = info->chargerAcOnline || info->chargerUsbOnline || info->chargerDockOnline;
-        if (plugged && info->batteryStatus == BatteryStatus::NOT_CHARGING &&
-            info->batteryHealth == BatteryHealth::GOOD &&
-            property_get_bool("vendor.lenovo.charge_hold", false)) {
-            info->chargingState = BatteryChargingState::LONG_LIFE;
-        }
-    }
-};
 
 #if !CHARGER_FORCE_NO_UI
 using aidl::android::hardware::health::charger::ChargerCallback;
@@ -170,7 +140,7 @@ int main(int argc, char** argv) {
     auto config = std::make_unique<healthd_config>();
     ::android::hardware::health::InitHealthdConfig(config.get());
     qti_healthd_board_init(config.get());
-    auto binder = ndk::SharedRefBase::make<LenovoHealth>(gInstanceName, std::move(config));
+    auto binder = ndk::SharedRefBase::make<Health>(gInstanceName, std::move(config));
 
     if (argc >= 2 && argv[1] == gChargerArg) {
 #if !CHARGER_FORCE_NO_UI

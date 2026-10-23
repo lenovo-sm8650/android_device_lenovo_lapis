@@ -10,12 +10,6 @@ vendor.main_front.              u:object_r:vendor_camera_prop:s0
 vendor.main_macro.              u:object_r:vendor_camera_prop:s0
 vendor.camera.sn.               u:object_r:vendor_camera_prop:s0
 
-# Package variant (dtb region), see init.lenovo.region.sh
-ro.vendor.lenovo.dtb_region    u:object_r:vendor_lenovo_region_prop:s0 exact string
-
-# A Lenovo charge limit holds charging, see health/main.cpp
-vendor.lenovo.charge_hold      u:object_r:vendor_lenovo_charge_hold_prop:s0 exact bool
-
 # Dolby Vision
 persist.vendor.dolbyv.  u:object_r:vendor_dolbyv_prop:s0
 vendor.dolbyv.          u:object_r:vendor_dolbyv_prop:s0

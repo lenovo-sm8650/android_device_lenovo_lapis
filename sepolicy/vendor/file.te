@@ -20,5 +20,3 @@ type vendor_persist_wlan_file, file_type;
 # Pen/keyboard wireless charging transmitter (power_supply/wls_tx)
 type vendor_sysfs_wls_tx, sysfs_type, fs_type;
 
-# /sys/firmware/fdt (running device tree), read by init.lenovo.region.sh
-type vendor_sysfs_fdt, sysfs_type, fs_type;

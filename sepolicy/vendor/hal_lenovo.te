@@ -1,5 +1,5 @@
 # Lenovo vendor HALs (vendor.lenovo.hardware.*), stock AIDL services.
-# Types and rules follow the stock ZUI_17.5.10.362 vendor policy.
+# Types and rules follow the stock vendor policy.
 
 hal_attribute(lenovobattery)
 hal_attribute(lenovodisplay)
@@ -73,12 +73,3 @@ init_daemon_domain(hal_lenovotouchscreen_default)
 binder_use(hal_lenovotouchscreen_default)
 allow hal_lenovotouchscreen_default vendor_proc_lenovo_touch:file rw_file_perms;
 allow hal_lenovotouchscreen_default proc:file rw_file_perms;
-
-# Clients: lenovo-input in system_server
-hal_client_domain(system_server, hal_lenovobattery)
-hal_client_domain(system_server, hal_lenovodisplay)
-hal_client_domain(system_server, hal_lenovokeyboard)
-hal_client_domain(system_server, hal_lenovotouchscreen)
-
-# /dev/lenovo_penraw, used by PenService
-allow system_app lenovo_device:chr_file rw_file_perms;

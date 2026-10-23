@@ -1,5 +1,5 @@
 # setwlansardsi*.sh: WLAN SAR power limits through vendor_cmd_tool (nl80211
-# vendor commands), started by init for lenovo-input (SarManager)
+# vendor commands), started by init
 type lenovo_wlan_sar, domain;
 type lenovo_wlan_sar_exec, exec_type, vendor_file_type, file_type;
 init_daemon_domain(lenovo_wlan_sar)

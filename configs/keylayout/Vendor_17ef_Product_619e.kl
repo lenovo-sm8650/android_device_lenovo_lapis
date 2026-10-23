@@ -1,5 +1,5 @@
-# Converted from the stock ZUI keylayout by
-# tools/bringup/convert_keylayouts.py; ZUI-only keycodes remapped.
+# Converted from the stock keylayout by
+# tools/bringup/convert_keylayouts.py; vendor-only keycodes remapped.
 # Copyright (C) 2010 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -130,7 +130,7 @@ key 109   PAGE_DOWN
 key 110   INSERT
 key 111   FORWARD_DEL
 # key 112 "KEY_MACRO"
-key 113   VOLUME_MUTE  # ZUI LENOVO_VOLUME_MUTE
+key 113   VOLUME_MUTE  # LENOVO_VOLUME_MUTE
 key 114   VOLUME_DOWN
 key 115   VOLUME_UP
 key 116   POWER
@@ -418,7 +418,7 @@ key usage 0x0c019C PROFILE_SWITCH
 key usage 0x0c01A2 ALL_APPS
 
 # Lenovo Olympia custom key
-key usage 0x0c038e LOCK  # ZUI SCREEN_LOCK
+key usage 0x0c038e LOCK  # SCREEN_LOCK
 # key usage 0x0c0397 SUPER_CONNECT  (no AOSP equivalent)
 
 # Joystick and game controller axes.

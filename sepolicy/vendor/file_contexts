@@ -25,7 +25,6 @@
 
 # WLAN driver (kernel) reads the MAC from persist
 /mnt/vendor/persist/kiwi_v2(/.*)?                u:object_r:vendor_persist_wlan_file:s0
-/vendor/bin/init\.lenovo\.region\.sh    u:object_r:lenovo_region_exec:s0
 /vendor/bin/setwlansardsi[0-9]\.sh    u:object_r:lenovo_wlan_sar_exec:s0
 /vendor/bin/vendor_cmd_tool    u:object_r:lenovo_wlan_sar_exec:s0
 

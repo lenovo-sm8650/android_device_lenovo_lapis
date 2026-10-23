@@ -1,6 +1,0 @@
-# Video motion smoothing: VideoMotion (system_app) sets sys.lenovo.memc.<uid>,
-# read by MediaCodec in the codec client (core apps, mediaserver; vendor apps
-# may not read system_internal props).
-system_internal_prop(lenovo_memc_prop)
-set_prop(system_app, lenovo_memc_prop)
-get_prop({ untrusted_app_all priv_app platform_app system_app gmscore_app mediaserver }, lenovo_memc_prop)

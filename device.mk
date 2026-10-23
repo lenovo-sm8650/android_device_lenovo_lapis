@@ -28,20 +28,6 @@ PRODUCT_VENDOR_PROPERTIES += \
 # Dalvik
 $(call inherit-product, frameworks/native/build/tablet-10in-xhdpi-2048-dalvik-heap.mk)
 
-# Video motion smoothing (Qualcomm VPP frame interpolation, per app;
-# hardware/lenovo/packages/VideoMotion and frameworks/av)
-PRODUCT_PACKAGES += \
-    VideoMotion
-
-# Dolby Atmos UI: LunarisDolby (hardware/lenovo/packages/LunarisDolby),
-# set up for the stock DAX3 blobs and tuning of this tablet
-PRODUCT_PACKAGES += \
-    LunarisDolby
-
-# Device settings (hardware/lenovo/packages/LenovoParts)
-PRODUCT_PACKAGES += \
-    LenovoParts
-
 # WiFi Display (Miracast): the QTI session of the OnePlus QSSI blobs
 # (proprietary-files.txt) with the QTI display config clients built from source
 PRODUCT_PACKAGES += \
@@ -54,30 +40,14 @@ PRODUCT_SYSTEM_EXT_PROPERTIES += \
     persist.debug.wfd.enable=1 \
     persist.sys.wfd.virtual=0
 
-# Dolby Vision service app with the stock com.dolby.vision_play broadcast
-# (lenovo/DolbyVisionService)
+# Dolby Vision playback service (stock app, proprietary-files.txt)
 PRODUCT_PACKAGES += \
     DolbyVisionService
 
-# Lenovo pen / keyboard / battery bridge (hardware/lenovo/input)
-PRODUCT_PACKAGES += \
-    PenService \
-    lenovo-input \
-    ZuiKeyboardUpdate \
-    ZuiKeyboardUpdateOlympia
-
-# Stock Lenovo pen/keyboard keylayouts, ZUI-only keycodes remapped
-# (convert_keylayouts.py)
+# Stock Lenovo keyboard keylayouts and input device configurations
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*.kl,device/lenovo/lapis/configs/keylayout,$(TARGET_COPY_OUT_VENDOR)/usr/keylayout) \
     $(call find-copy-subdir-files,*.idc,device/lenovo/lapis/configs/idc,$(TARGET_COPY_OUT_VENDOR)/usr/idc)
-
-# Display configuration of the stock firmware: the panel has no display_id_<id>.xml (the
-# stock vendor one is for the Qualcomm reference panel), so the display service takes the
-# brightness arrays of config.xml and the high brightness mode data of display_hdr.xml
-# (stock DisplayDeviceConfig.zuiLoadHighBrightnessModeData)
-PRODUCT_COPY_FILES += \
-    device/lenovo/lapis/configs/displayconfig-system/display_hdr.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/displayconfig/display_hdr.xml
 
 # Fingerprint (Goodix)
 PRODUCT_COPY_FILES += \
@@ -98,8 +68,6 @@ PRODUCT_PACKAGES += \
     fstab.zram.12 \
     fstab.zram.16 \
     init.lenovo.zram.rc \
-    init.lenovo.region.rc \
-    init.lenovo.region.sh \
     setwlansardsi0.sh \
     setwlansardsi1.sh \
     setwlansardsi2.sh \
@@ -114,12 +82,9 @@ PRODUCT_COPY_FILES += \
 PRODUCT_ENFORCE_RRO_TARGETS := *
 PRODUCT_PACKAGES += \
     FrameworksResTarget \
-    PenServiceResTarget \
     SettingsProviderResTarget \
     SettingsResTarget \
-    SystemUIResTarget \
-    WifiResTarget \
-    ZuiUDeviceResTarget
+    WifiResTarget
 
 # The NT36532 touch IC is flashless: nvt_36xxx downloads this firmware 5 s
 # after probe, so recovery needs it in its own /vendor/firmware.
@@ -158,11 +123,7 @@ PRODUCT_SHIPPING_API_LEVEL := $(BOARD_SHIPPING_API_LEVEL)
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
-    device/lenovo/lapis \
-    device/lenovo/lapis/lenovo/DolbyVisionService \
-    device/lenovo/lapis/lenovo/KeyboardUpdate \
-    device/lenovo/lapis/lenovo/PenService \
-    hardware/lenovo
+    device/lenovo/lapis
 
 # VINTF
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += device/lenovo/lapis/vintf/device_framework_matrix.xml

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Stock power profile (vendor FrameworksResTarget_Vendor, ZUI_17.5.10.362), recovered
+<!-- Stock power profile (vendor FrameworksResTarget_Vendor), recovered
      with xmltree2xml.py. Without it AOSP's placeholder (battery.capacity 2)
      is used for battery usage estimates. -->
 <device name="Android">

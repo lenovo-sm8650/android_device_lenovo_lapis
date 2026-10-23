@@ -1,8 +1,7 @@
-# Imported from stock TB520FU ZUI_17.5.10.362 vendor/build.prop
+# Imported from stock TB520FU vendor/build.prop
 # should change this by project
 vendor.display.lcd_density=340
 
-#ro.sys.zui.param.c=0
 persist.sys.colormode_api=google
 persist.sys.colormode_modes=257:native;0:standard
 persist.sys.sf.color_temperature.warm=1.0,0.984378,0.9638465
@@ -12,17 +11,12 @@ ro.surface_flinger.primary_display_orientation=ORIENTATION_270
 debug.sf.ignore_hwc_physical_display_orientation=true
 ro.vendor.dolby.dax.version=DAX3_3.13.0.9_r1
 
-# Camera: the camx HAL applies the Lenovo 3A/ISP tuning only while
-# vendor.camera.packagename.zui is set. The ZUI cameraserver sets it for its
-# own camera app; PixelOS never does, so every app got the dark untuned path.
+# Camera: the camx HAL applies the Lenovo 3A/ISP tuning only while the stock
+# property vendor.camera.packagename.zui is set; without it every app gets the
+# dark untuned path.
 vendor.camera.packagename.zui=com.zui.camera
 
-# Lenovo device/pen identity from the stock vendor build.prop (ZUI_17.5.10.362).
-# PenService picks the settings screen (Pen Pro: battery, writing vibration,
-# brush effects) from pen.compat.project + pen_info; without them every pen
-# showed the generic capacitive pen page. ZuiUDevice uses the keyboard names.
-# ro.config.lgsi.* (system) is left out on purpose: apps treat it as ZUI
-# (except ro.config.lgsi.device.type, see system_ext.prop).
+# Lenovo device identity from the stock vendor build.prop.
 ro.vendor.config.lgsi.cap_pen_info=monet_2
 ro.vendor.config.lgsi.pen.bluetooth_key.support=1
 ro.vendor.config.lgsi.pen.compat.project=1

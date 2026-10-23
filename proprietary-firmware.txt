@@ -1,5 +1,5 @@
 # Firmware written to the target slot by the ROM zip and OTAs (radio/).
-# From TB520FU_ROW_OPEN_USER_Q29300.0_A17_ZUI_18.5.10.037_ST_260929, re-footered
+# From TB520FU_ROW_OPEN_USER_Q29300.0_A17_18.5.10.037_ST_260929, re-footered
 # with the AOSP testkey_rsa4096 (same salt and digest as stock).
 
 # pvmfw (protected VM firmware): the bootloader verifies it through vbmeta
