@@ -50,7 +50,6 @@ VENDOR_SECURITY_PATCH := $(BOOT_SECURITY_PATCH)
 
 # SEPolicy
 BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
-SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/private
 
 # Verified Boot
 # pvmfw is a prebuilt (radio/, proprietary-firmware.txt) with its own testkey
@@ -59,6 +58,3 @@ BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --include_descriptors_from_image vendor/leno
 
 # Include the proprietary files BoardConfig.
 include vendor/lenovo/lapis/BoardConfigVendor.mk
-
-# Optional customizations (hardware/lenovo/custom), when present
--include hardware/lenovo/custom/BoardConfigCustom.mk

@@ -4,4 +4,9 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/custom_lapis.mk
+    $(LOCAL_DIR)/lineage_lapis.mk
+
+COMMON_LUNCH_CHOICES := \
+    lineage_lapis-user \
+    lineage_lapis-userdebug \
+    lineage_lapis-eng

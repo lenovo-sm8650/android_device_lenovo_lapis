@@ -6,9 +6,5 @@
   {
     "repository": "android_device_lenovo_lapis-kernel",
     "target_path": "device/lenovo/lapis-kernel"
-  },
-  {
-    "repository": "android_hardware_lenovo",
-    "target_path": "hardware/lenovo"
   }
 ]
