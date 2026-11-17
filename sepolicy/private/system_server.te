@@ -1,5 +1,3 @@
-# PixelOS properties system_server reads (PropImitationHooks in the
-# framework, the version for the updater) but device/custom only grants to
-# apps.
-get_prop(system_server, pih_disable_prop)
+# PixelOS property system_server reads (the version for the updater) but
+# device/custom only grants to apps.
 get_prop(system_server, custom_version_prop)
