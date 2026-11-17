@@ -34,7 +34,7 @@ Highlights of the PixelOS (`seventeen`) build:
 - **Widevine L1** — Netflix HD playback.
 - **HDR, HDR10+ and Dolby Vision** — HDR video playback with the device's display and media codecs.
 - **Dolby Atmos** — LunarisDolby settings, sound profiles and equalizer.
-- **Play Integrity** — BASIC, DEVICE and STRONG.
+- **Play Integrity spoofing** — the PixelOS one, in Settings > System > Developer options.
 - **OTA updates** — full and incremental updates through Settings > System > System update.
 - **Lenovo Pencil** — automatic pairing, battery and charging status, writing haptics, pen buttons and the Lenovo pen settings.
 - **Lenovo keyboard** — touchpad controls, configurable shortcut keys, backlight, firmware updates and desktop mode integration.
@@ -53,11 +53,7 @@ HDR and Dolby playback depends on the app, content and streaming subscription.
 
 Available in Settings > Advanced features > Experimental features (customizations build only):
 
-- **App compatibility** — choose the brand, manufacturer and model reported to selected apps, and make selected apps recognize Google Play as their installer.
-- **Integrity** — three pages of the [PlayIntegrityFix fork](https://github.com/wnduddld0513/PlayIntegrityFix/tree/seventeen) (GPL-3.0), built into the ROM without root. Each shows On or Off and is on by default; the category is shown only when the app is installed.
-  - **Specter** — keeps the other two consistent: one update pass fetches the profile of the chosen Pixel device (preferred and blocked devices), sets the security patch (profile, device, bulletin, synthetic or manual), keeps the target apps and takes a keybox from the Specter catalog or a URL. It runs after the first boot or a reset, then periodically.
-  - **TEESimulator** — attestation with a keybox, signed inside `system_server` so that apps never see the key: import or download a keybox, target apps, security patch and the Google revocation check. No keybox is shipped.
-  - **Play Integrity Fix** — on with a built-in Pixel 9 (tokay) profile that can be updated from GitHub.
+- **App compatibility** — choose the brand, manufacturer and model reported to selected apps (by default, Netflix sees the OnePlus Pad Go 2).
 
 ## Working
 
@@ -180,9 +176,6 @@ repo sync -c -j$(nproc)
   <project name="android_packages_apps_Settings" path="packages/apps/Settings" remote="lapis" />
   <project name="android_packages_apps_Updater" path="packages/apps/Updater" remote="lapis" />
   <project name="android_vendor_lineage" path="vendor/lineage" remote="lapis" />
-
-  <!-- Play Integrity Fix (customizations, GPL-3.0) -->
-  <project name="wnduddld0513/PlayIntegrityFix" path="packages/apps/PlayIntegrityFix" remote="github" revision="seventeen" />
 </manifest>
 ```
 
